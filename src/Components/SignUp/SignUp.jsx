@@ -15,14 +15,10 @@ import {schema} from '../../Utils/validationSchema';
 
 export const SignUp = () => {
     const dispatch = useDispatch();
-
-
     const {register, handleSubmit,reset, formState: {errors}} = useForm({
         mode: "onBlur",
         resolver: yupResolver(schema),
     });
-
-
 
     const onSubmit  = (data) => {
         if (data.password !==data.password2) {

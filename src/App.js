@@ -1,13 +1,13 @@
-import './App.css';
+import {BrowserRouter} from 'react-router-dom';
 import {NavigationBar} from './Components/NavigationBar/NavigationBar';
-import {SignUpPage} from './Pages/SignUpPage';
+import {Routes} from './Components/Routes/Routes';
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
       <NavigationBar/>
-      <SignUpPage />
-    </div>
+      <Routes />
+    </BrowserRouter>
   );
 }
 
