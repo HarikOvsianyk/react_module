@@ -1,67 +1,42 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import {Form} from '../UI/Form';
 import {Input} from '../UI/Input';
+import { DateInput } from '../UI/DateInput';
+import {SexSelect} from '../UI/SexSelect';
 import {PrimaryButton} from '../UI/PrimaryButton';
+import {getData} from '../../Store/Actions/form';
+import {useDispatch} from 'react-redux';
+import {schema} from '../../Utils/validationSchema';
 
 
 export const SignUp = () => {
-    const schema = yup.object().shape({
-        firstName: yup
-        .string()
-        .matches(/^([^0-9]*)$/, "First name should not contain numbers")
-        .required("First name is required field"),
-        lastName: yup
-        .string()
-        .matches(/^([^0-9]*)$/, "Last name should not contain numbers")
-        .required("Last name is required field"),
-        birthday: yup
-        .number()
-        .required()
-        .positive()
-        .integer(),
-        sex: yup
-        .string(),
-        email: yup
-        .string()
-        .email("Email should have correct format")
-        .required("Email is a required field"),
-        password: yup
-        .string()
-        .min(3)
-        .required('Password is required field'),
-        password2: yup
-        .string()
-        .min(3)
-        .required('Password is required field'),
-        username: yup
-        .string()
-        .required(),
-    });
+    const dispatch = useDispatch();
+
 
     const {register, handleSubmit,reset, formState: {errors}} = useForm({
         mode: "onBlur",
         resolver: yupResolver(schema),
     });
 
-    const handleChange = (newValue) => {
-        setValue(newValue);
-      };
 
-    const onSubmit = () => {
-        reset();
+
+    const onSubmit  = (data) => {
+        if (data.password !==data.password2) {
+            alert("Passwords must be identical")
+        } else {
+            reset();
+            dispatch(getData(data));
+        }
     }
 
-    const [value, setValue] = React.useState(new Date());
     return (
         <Container sx={{width: '400px'}}>
             <Typography component="h2" variant="h5">Registration user</Typography>
-            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit)}>
             <Input
                 {...register('firstName')}
                 id="firstName"
@@ -81,34 +56,10 @@ export const SignUp = () => {
                 required
                 error={!!errors.lastName}
                 helperText={errors?.lastName?.message}
+                sx={{mb:3}}
             />
-            <Input
-                {...register('birthday')}
-                id="birthday"
-                type="date"
-                label="Birthday"
-                placeholder = "Enter your birthday"
-                required
-                error={!!errors.birthday}
-                helperText={errors?.birthday?.message}
-            />
-            {/* <DesktopDatePicker
-          label="Date desktop"
-          inputFormat="MM/dd/yyyy"
-          value={value}
-          onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
-            <Input
-                {...register('sex')}
-                id="sex"
-                type="text"
-                label="Sex"
-                placeholder = "Enter your sex"
-                required
-                error={!!errors.email}
-                helperText={errors?.email?.message}
-            />
+            <DateInput/>
+            <SexSelect/>
             <Input
                 {...register('email')}
                 id="email"
@@ -126,6 +77,7 @@ export const SignUp = () => {
                 label="Password"
                 placeholder = "Enter your password"
                 required
+                autoComplete="on"
                 error={!!errors.password}
                 helperText={errors?.password?.message}
             />
@@ -136,6 +88,7 @@ export const SignUp = () => {
                 label="Password"
                 placeholder = "Confirm your password."
                 required
+                autoComplete="on"
                 error={!!errors.password2}
                 helperText={errors?.password2?.message}
             />
@@ -150,7 +103,7 @@ export const SignUp = () => {
                 helperText={errors?.username?.message}
             />
             <PrimaryButton>Registration</PrimaryButton>
-            </form>
+            </Form>
         </Container>
     )
     
