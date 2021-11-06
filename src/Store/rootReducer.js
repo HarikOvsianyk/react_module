@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux';
-import { formReducer } from './Reducers/formReducer';
+import { formReducer, themeReducer } from './Reducers';
+
 
 export const rootRedcuer = combineReducers({
     data: formReducer,
+    theme: themeReducer,
 });

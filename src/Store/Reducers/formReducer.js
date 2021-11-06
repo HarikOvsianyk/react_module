@@ -4,10 +4,9 @@ export const initialState = {
     data: {},
 };
 
-export function formReducer (state=initialState, action) {
+export const formReducer = (state=initialState, action) => {
     switch(action.type) {
         case GET_DATA:
-            console.log(action.payload);
             return {
                 ...state,
                 data: action.payload,

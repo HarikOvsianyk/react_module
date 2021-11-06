@@ -9,8 +9,7 @@ export const PrimaryButton = ({children, ...props}) => {
         variant="contained"
         type="submit"
         fullWidth
-        sx={{bgcolor:'blue',
-            mx: "auto"}}
+        sx={{mx: "auto"}}
         {...props}
         >{children}
         </Button>
