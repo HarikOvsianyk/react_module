@@ -38,6 +38,7 @@ export const LogIn = () => {
                 label="Password"
                 placeholder = "Enter your password..."
                 required
+                autoComplete="on"
                 error={!!errors.password}
                 helperText={errors?.password?.message}
             />

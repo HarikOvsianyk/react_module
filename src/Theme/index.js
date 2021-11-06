@@ -6,13 +6,19 @@ export const lightTheme = {
           },
           primary: {
             main: '#E0E0E0',
-            ligth: '#red',
-          }
+        },
+        text: {
+            primary: '#191919',
+            secondary: '#191919'
+        },
     },
 };
 
 export const darkTheme = {
     palette: {
         mode: 'dark',
+        primary: {
+            main: '#191919',
+        }
     },
 }

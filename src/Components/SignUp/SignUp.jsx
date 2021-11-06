@@ -54,7 +54,7 @@ export const SignUp = () => {
                 helperText={errors?.lastName?.message}
                 sx={{mb:3}}
             />
-            <DateInput/>
+            <DateInput />
             <SexSelect/>
             <Input
                 {...register('email')}

@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 export const MovieCard = () => {
   return (
     <Card sx={{ maxWidth: 345, width:250, position:'relative', m:3 }}>
-      <IconButton aria-label="settings" sx={{position:'absolute', color: 'black', bgcolor: 'white', right:5, top: 5, ":hover": {bgcolor: 'white'}}}>
+      <IconButton aria-label="settings" sx={{position:'absolute', bgcolor: 'primary.main', right:5, top: 5}}>
             <MoreVertIcon sx={{transform: 'rotate(90deg)'}}/>
           </IconButton >
       <CardMedia
@@ -21,7 +21,7 @@ export const MovieCard = () => {
       />
       <CardContent>
       <Box sx={{ position: 'absolute',borderRadius: '50%', display: 'inline-flex', bgcolor:'black', bottom: 80 }}>
-      <CircularProgress variant="determinate"  value={45}/>
+      <CircularProgress variant="determinate" color="success"  value={45}/>
       <Box
         sx={{
           top: 0,

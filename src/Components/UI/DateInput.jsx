@@ -1,8 +1,9 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
+import { Stack, TextField } from "@mui/material";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DatePicker';
+
 
 export const DateInput = () => {
     const [value, setValue] = React.useState(new Date());
@@ -12,14 +13,17 @@ export const DateInput = () => {
     };
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DesktopDatePicker
-          label="Birthday date"
-          inputFormat="MM/dd/yyyy"
-          value={value}
-          onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
+        <LocalizationProvider dateAdapter={AdapterDateFns} >
+            <Stack sx={{width:350}}>
+                    <DesktopDatePicker
+                        label="Birthday date"
+                        inputFormat="MM/dd/yyyy"
+                        value={value}
+                        onChange={handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                        minDate={new Date("1921-06-06")}
+                />
+            </Stack>
         </LocalizationProvider> 
     );
 };
