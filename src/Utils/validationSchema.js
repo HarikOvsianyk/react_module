@@ -20,9 +20,10 @@ export const schema = yup.object().shape({
     password2: yup
     .string()
     .min(3)
-    .required('Password is required field'),
+    .required('Password is required field')
+    .oneOf([yup.ref('password')], 'Passwords must match'),
     username: yup
     .string()
-    .matches(/([a-z]+[._\d]+\S)/g, 'Do not use big letters, numbers in beginning, whitespece or symbols except "." or "_" ')
-    .required(),
+    .matches(/^([a-z]{1}[^!@#$%^&*()]{2,11})/, 'Do not use big letters, numbers in beginning, whitespece or symbols except "." or "_" ')
+    .required()
 });

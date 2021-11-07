@@ -21,13 +21,9 @@ export const SignUp = () => {
     });
 
     const onSubmit  = (data) => {
-        if (data.password !==data.password2) {
-            alert("Passwords must be identical")
-        } else {
             reset();
             dispatch(getData(data));
-        }
-    }
+    };
 
     return (
         <Container sx={{width: '400px'}}>
