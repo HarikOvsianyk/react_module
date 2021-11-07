@@ -24,6 +24,6 @@ export const schema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords must match'),
     username: yup
     .string()
-    .matches(/^([a-z]{1}[^!@#$%^&*()]{2,11})/, 'Do not use big letters, numbers in beginning, whitespece or symbols except "." or "_" ')
+    .matches(/^[a-z0-9_.]{3,16}$/, 'Do not use big letters, numbers in beginning, whitespece or symbols except "." or "_" ')
     .required()
 });
