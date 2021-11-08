@@ -1,18 +1,27 @@
-import axios from  'axios';
-
-export const API = 'https://api.themoviedb.org/3';
-export const IMAGE_API = 'https://image.tmdb.org/t/p/w500/';
+import axios from "axios";
+export const API = "https://api.themoviedb.org/3";
 
 export const authAxios = axios.create({
-    baseURL: API,
-    params: {
-        api_key: process.env.REACT_APP_API_KEY,
-    } 
+  baseURL: API,
+  params: {
+    api_key: process.env.REACT_APP_API_KEY,
+  },
 });
 
 export const getMovie = async (movieId) => {
-    const {data} = await axios.get(`/movie/${movieId}`);
-    return data;
+  const { data } = await authAxios.get(`/movie/${movieId}`);
+  return data;
+};
+
+export const genereteToken = async () => {
+  const { data } = await authAxios.get(`/authentication/token/new`);
+  return data;
 };
 
 
+export const genereteSessionId = async (request_token) => {
+    const { data } = await authAxios.post(`/authentication/session/new`, {
+        request_token,
+    });
+    return data;
+  };

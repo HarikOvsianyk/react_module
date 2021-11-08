@@ -1,12 +1,10 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 export const PrivateRoutes = ({path, component:Component}) => {
-    const user = useSelector((state) => state.user)
     return (
         <Route path={path} exact render={(props)=> {
-            if (user.isLogged) {
+            if (localStorage.getItem('session_id')) {
                 return <Component {...props} />;
             }
             return <Redirect to='/'/>
