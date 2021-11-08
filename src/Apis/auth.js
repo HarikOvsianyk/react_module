@@ -14,8 +14,9 @@ export const getMovie = async (movieId) => {
 };
 
 export const genereteToken = async () => {
-  const { data } = await authAxios.get(`/authentication/token/new`);
-  return data;
+  const { data: {request_token} } = await authAxios.get(`/authentication/token/new`);
+  localStorage.setItem('request_token', request_token);
+  return request_token;
 };
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
@@ -8,9 +8,8 @@ import { Form } from "../UI/Form";
 import { Input } from "../UI/Input";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { useHistory } from "react-router-dom";
-import { logIn } from "../../Store/Actions";
 import { useDispatch } from "react-redux";
-
+import {useFetching} from '../../Hooks/useFetching';
 import * as api from "../../Apis";
 
 export const schema = yup.object().shape({
@@ -24,6 +23,11 @@ export const schema = yup.object().shape({
 export const LogIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [fetchToken] = useFetching(async()=> {
+    const token = await api.genereteToken();
+    const redirectURL = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/session`;
+    window.open(redirectURL, "_blank", "noopener noreferrer");
+  });
 
   const {
     register,
@@ -36,17 +40,8 @@ export const LogIn = () => {
   });
 
   const onSubmit = async (data) => {
-    /* dispatch(logIn(data)); */
-    /* history.push('./main'); */
-    const response = await api.genereteToken();
-    console.log(response);
-
-    localStorage.setItem('request_token', response.request_token);
-
-    const redirectURL = `https://www.themoviedb.org/authenticate/${response.request_token}?redirect_to=http://localhost:3000/session`;
-    window.open(redirectURL, "_blank");
-    
-
+    fetchToken();
+    reset();
   };
   return (
     <Container sx={{ width: "400px" }}>
