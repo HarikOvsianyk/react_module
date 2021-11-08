@@ -1,4 +1,5 @@
 import React from 'react';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useForm } from "react-hook-form";
@@ -11,9 +12,11 @@ import {PrimaryButton} from '../UI/PrimaryButton';
 import {getData} from '../../Store/Actions/form';
 import {useDispatch} from 'react-redux';
 import {schema} from '../../Utils/validationSchema';
+import {useHistory} from 'react-router-dom';
 
 
 export const SignUp = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const {register, handleSubmit,reset, formState: {errors}} = useForm({
         mode: "onBlur",
@@ -26,7 +29,9 @@ export const SignUp = () => {
     };
 
     return (
-        <Container sx={{width: '400px'}}>
+        <Box>
+            <PrimaryButton onClick={() => history.push(`/`)} sx={{width: 200, left:0}}>Back to Sign Up</PrimaryButton>
+            <Container sx={{width: '400px'}}>
             <Typography component="h2" variant="h5">Registration user</Typography>
             <Form onSubmit={handleSubmit(onSubmit)}>
             <Input
@@ -97,6 +102,7 @@ export const SignUp = () => {
             <PrimaryButton>Registration</PrimaryButton>
             </Form>
         </Container>
+        </Box>
     )
     
 };

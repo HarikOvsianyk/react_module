@@ -5,7 +5,7 @@ import {SignUp} from '../Components/SignUp/SignUp';
 
 export const SignUpPage = () => {
     return (
-            <Container maxWidth="xl" sx={{mt:5, mb:5}}>
+            <Container maxWidth="xl" sx={{mt:2}}>
                 <SignUp />
             </Container>
     )

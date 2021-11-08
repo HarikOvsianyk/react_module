@@ -1,4 +1,4 @@
-import {CHANGE_THEME} from '../Actions/theme';
+import {CHANGE_THEME} from '../Actions';
 
 export const initialState = {
     isLightMode:true,

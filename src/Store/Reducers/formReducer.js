@@ -1,4 +1,4 @@
-import {GET_DATA} from '../Actions/form';
+import {GET_DATA} from '../Actions';
 
 export const initialState = {
     data: {},
