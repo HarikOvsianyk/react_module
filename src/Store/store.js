@@ -8,12 +8,13 @@ import thunk from "redux-thunk";
 const userMiddleware = (store) => (next) => async (action) => {
   if (
     action.type !== userActions.FETCH_USER_SUCCESS &&
-    localStorage.getItem('session_id')
-  ) {const sessionId = localStorage.getItem('session_id');
+    !store.getState().user.isLoggedIn
+  ) {
+  let sessionId = localStorage.getItem('session_id');
   const user = await api.getAccount(sessionId);
   store.dispatch(fetchUserSuccess(user));
   }
-  next(action);
+  return next(action);
 };
 
 const middlewares = [thunk, userMiddleware];

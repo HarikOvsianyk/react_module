@@ -8,11 +8,6 @@ export const authAxios = axios.create({
   },
 });
 
-export const getMovie = async (movieId) => {
-  const { data } = await authAxios.get(`/movie/${movieId}`);
-  return data;
-};
-
 export const generateToken = async () => {
   const {
     data: { request_token },

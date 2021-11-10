@@ -9,23 +9,19 @@ import {Input} from '../UI/Input';
 import { DateInput } from '../UI/DateInput';
 import {SexSelect} from '../UI/SexSelect';
 import {PrimaryButton} from '../UI/PrimaryButton';
-import {getData} from '../../Store/Actions/form';
-import {useDispatch} from 'react-redux';
 import {schema} from '../../Utils/validationSchema';
 import {useHistory} from 'react-router-dom';
 
 
 export const SignUp = () => {
     const history = useHistory();
-    const dispatch = useDispatch();
     const {register, handleSubmit,reset, formState: {errors}} = useForm({
         mode: "onBlur",
         resolver: yupResolver(schema),
     });
 
-    const onSubmit  = (data) => {
+    const onSubmit  = () => {
             reset();
-            dispatch(getData(data));
     };
 
     return (

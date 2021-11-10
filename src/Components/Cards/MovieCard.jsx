@@ -8,7 +8,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-export const MovieCard = () => {
+export const MovieCard = (props) => {
+  const {title, poster_path, release_date } =
+		props;
   return (
     <Card sx={{ maxWidth: 345, width:250, position:'relative', m:3 }}>
       <IconButton aria-label="settings" sx={{position:'absolute', bgcolor: 'primary.main', right:5, top: 5}}>
@@ -16,7 +18,7 @@ export const MovieCard = () => {
           </IconButton >
       <CardMedia
         component="img"
-        image="https://vogue.ua/media/cache/resolve/inline_990x/uploads/article-inline/052/0de/9ef/5c8f9ef0de052.jpeg"
+        image={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt="Paella dish"
       />
       <CardContent>
@@ -40,10 +42,10 @@ export const MovieCard = () => {
       </Box>
     </Box>
         <Typography component="h2" variant="h5">
-          Name of movie
+          {title}
         </Typography>
         <Typography>
-          31.01.2020
+          {release_date}
         </Typography>
       </CardContent>
     </Card>
