@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,6 +14,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Switch from '../UI/Switch';
+import {PrimaryButton} from '../UI/PrimaryButton';
+import { useDispatch } from 'react-redux';
+import {fetchSearchAsync} from '../../Thunks';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -56,6 +59,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const NavigationBar = () => {
+  const [search, setSearch] = useState('');
+  const dispatch = useDispatch();
+  const onSubmit=() => {
+    /* dispatch(fetchSearchAsync(search)); */
+    console.log(search);
+  }
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -164,9 +173,12 @@ export const NavigationBar = () => {
             <StyledInputBase
               placeholder="Search movie…"
               inputProps={{ 'aria-label': 'search' }}
-              sx={{width: '150ch'}}
+              sx={{width: '140ch'}}
+              onChange={(e)=> setSearch(e.target.value)}
             />
+  
           </Search>
+          <PrimaryButton sx={{ml:2}} onClick={onSubmit}>Search</PrimaryButton>
           <Switch />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

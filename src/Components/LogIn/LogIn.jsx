@@ -13,7 +13,7 @@ import * as api from "../../Apis";
 import {useLocation} from 'react-router-dom';
 import {genereteSessionAndGetUser} from '../../Thunks/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import {fetchMoviesAsync} from '../../Thunks';
+
 
 
 export const schema = yup.object().shape({
@@ -29,10 +29,6 @@ export const LogIn = () => {
   const search = useLocation().search;
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-
-  useEffect(() => {
-    dispatch(fetchMoviesAsync());
-  }, [dispatch]);
 
   const {
     register,

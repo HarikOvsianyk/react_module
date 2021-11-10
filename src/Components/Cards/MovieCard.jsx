@@ -22,7 +22,7 @@ export const MovieCard = (props) => {
         alt="Paella dish"
       />
       <CardContent>
-      <Box sx={{ position: 'absolute',borderRadius: '50%', display: 'inline-flex', bgcolor:'black', bottom: 80 }}>
+      <Box sx={{ position: 'absolute',borderRadius: '50%', display: 'inline-flex', bgcolor:'black', bottom: 105 }}>
       <CircularProgress variant="determinate" color="success"  value={45}/>
       <Box
         sx={{
@@ -41,7 +41,7 @@ export const MovieCard = (props) => {
         </Typography>
       </Box>
     </Box>
-        <Typography component="h2" variant="h5">
+        <Typography component="h5" variant="subtitle1">
           {title}
         </Typography>
         <Typography>
