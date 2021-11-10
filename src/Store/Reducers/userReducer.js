@@ -1,4 +1,4 @@
-import {LOG_IN} from '../Actions';
+import {FETCH_USER_SUCCESS} from '../Actions/user';
 
 export const initialState = {
     currentUser:{},
@@ -7,7 +7,7 @@ export const initialState = {
 
 export function userReducer (state=initialState, action) {
     switch(action.type) {
-        case LOG_IN:
+        case FETCH_USER_SUCCESS:
             return {
                 ...state,
                 currentUser: {...action.payload},

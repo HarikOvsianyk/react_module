@@ -13,16 +13,30 @@ export const getMovie = async (movieId) => {
   return data;
 };
 
-export const genereteToken = async () => {
-  const { data: {request_token} } = await authAxios.get(`/authentication/token/new`);
-  localStorage.setItem('request_token', request_token);
+export const generateToken = async () => {
+  const {
+    data: { request_token },
+  } = await authAxios.get('/authentication/token/new');
   return request_token;
 };
 
+export const generateSessionId = async (requestToken) => {
+  const { data: session_id } = await authAxios.post(
+    '/authentication/session/new',
+    {
+      request_token: requestToken,
+    }
+  );
+  localStorage.setItem('session_id', session_id);
+  return session_id;
+};
 
-export const genereteSessionId = async (request_token) => {
-    const { data } = await authAxios.post(`/authentication/session/new`, {
-        request_token,
-    });
-    return data;
-  };
+export const getAccount = async (sessionId) => {
+  const { data } = await authAxios.get('/account', {
+    params: {
+      session_id: sessionId,
+    },
+  });
+
+  return data;
+};

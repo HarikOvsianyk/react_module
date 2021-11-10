@@ -1,6 +1,6 @@
-export const LOG_IN = '[user] - log in';
+export const FETCH_USER_SUCCESS = '[user] - fetch user success';
 
-export const logIn = (user) => ({
-    type: LOG_IN,
+export const fetchUserSuccess = (user) => ({
+    type: FETCH_USER_SUCCESS,
     payload: {user},
 });

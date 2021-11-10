@@ -5,7 +5,7 @@ export const PrivateRoutes = ({path, component:Component}) => {
     return (
         <Route path={path} exact render={(props)=> {
             if (localStorage.getItem('session_id')) {
-                return <Component {...props} />;
+                return <Component />;
             }
             return <Redirect to='/'/>
         }}/>
