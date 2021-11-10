@@ -12,7 +12,7 @@ import {useFetching} from '../../Hooks/useFetching';
 import * as api from "../../Apis";
 import {useLocation} from 'react-router-dom';
 import {genereteSessionAndGetUser} from '../../Thunks/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export const schema = yup.object().shape({
   email: yup
@@ -26,7 +26,6 @@ export const LogIn = () => {
   const history = useHistory();
   const search = useLocation().search;
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
 
   const {
     register,
@@ -48,14 +47,9 @@ export const LogIn = () => {
     const requestToken = new URLSearchParams(search).get('request_token');
     if (requestToken) {
       dispatch(genereteSessionAndGetUser(requestToken));
+      history.push('/main');
     } 
   },[search, dispatch, history])
-
-  useEffect(() => {
-		if (user.isLogged) {
-			history.push('/main');
-		}
-	}, [user, history]);
 
   const onSubmit = async (data) => {
     fetchToken();

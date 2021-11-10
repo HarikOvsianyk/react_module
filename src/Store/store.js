@@ -1,22 +1,32 @@
 import { createStore,applyMiddleware  } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { rootRedcuer } from "../Store/rootReducer";
-import { FETCH_USER_SUCCESS } from "./Actions";
-import { fetchUserSuccess } from "./Actions";
+import { fetchUserSuccess,userActions} from "./Actions";
 import * as api from '../Apis';
 import thunk from "redux-thunk";
 
 const userMiddleware = (store) => (next) => async (action) => {
-    if (action.type !== FETCH_USER_SUCCESS && !store.getState().user.isLoggedIn) {
-      let session_id = localStorage.getItem('session_id');
-      const user = await api.getAccount(session_id);
+  const { isLoggedIn } = store.getState().user;
+  console.log(store.getState().user);
+  if (
+    action.type !== userActions.FETCH_USER_SUCCESS &&
+    !isLoggedIn &&
+    localStorage.getItem('session_id')
+  ) {
+    try {
+      const sessionId = localStorage.getItem('session_id');
+      const user = await api.getAccount(sessionId);
       store.dispatch(fetchUserSuccess(user));
+    } catch {
+      localStorage.removeItem('session_id');
     }
-    return next(action);
-  };
+  }
+  next(action);
+};
 
-  const middlewares = [thunk, userMiddleware];
+const middlewares = [thunk, userMiddleware];
 
 export const store = createStore(
     rootRedcuer,
     composeWithDevTools(applyMiddleware(...middlewares)));
+
