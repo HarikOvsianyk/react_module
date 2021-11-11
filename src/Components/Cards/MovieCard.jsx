@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import { getDetailsAsync, setFavouriteAsync } from "../../Thunks";
 
 export const MovieCard = (props) => {
-  const { title, poster_path, release_date, id } = props;
+  const { title, poster_path, release_date, id, vote_average } = props;
   const {currentUser} = useSelector(state=> state.user);
   const {isFavourites} = useSelector(state=> state.movies);
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ export const MovieCard = (props) => {
             bottom: 105,
           }}
         >
-          <CircularProgress variant="determinate" color="success" value={45} />
+          <CircularProgress variant="determinate" color="success" value={vote_average*10} />
           <Box
             sx={{
               top: 0,
@@ -107,7 +107,7 @@ export const MovieCard = (props) => {
               component="div"
               sx={{ color: "white" }}
             >
-              {`${Math.round(45)}%`}
+              {`${(vote_average)*10}%`}
             </Typography>
           </Box>
         </Box>

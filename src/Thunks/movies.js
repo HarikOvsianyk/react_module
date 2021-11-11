@@ -47,7 +47,6 @@ export const getFavouritesAsync = (accountId, sessionId) => {
     const movies = await getFavourite(accountId, sessionId);
     dispatch(getFavouritesSuccess(movies.results));
     dispatch(offLoader());
-    console.log(movies.results);
   }
 }
 

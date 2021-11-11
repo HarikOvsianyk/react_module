@@ -34,7 +34,6 @@ export function moviesReducer(state = initialState, action) {
         getDetails: action.payload.movie,
       };
       case movieAction.GET_FEVOURITES_SUCCESS:
-        console.log(action.payload);
         return {
           ...state,
           favourites: action.payload,
