@@ -4,5 +4,7 @@ export const userActions = {
 
 export const fetchUserSuccess = (user) => ({
     type: userActions.FETCH_USER_SUCCESS,
-    payload: {user},
+    payload: {
+        user
+    },
 });

@@ -1,19 +1,19 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export const SexSelect = () => {
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
 
   return (
-    <Box sx={{ minWidth: 120, mt:2 }}>
+    <Box sx={{ minWidth: 120, mt: 2 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Sex</InputLabel>
         <Select
@@ -29,4 +29,4 @@ export const SexSelect = () => {
       </FormControl>
     </Box>
   );
-}
+};

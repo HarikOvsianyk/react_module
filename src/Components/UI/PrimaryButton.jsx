@@ -1,20 +1,21 @@
-import React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import React from "react";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
-export const PrimaryButton = ({children, ...props}) => {
-    return (
+export const PrimaryButton = ({ children, ...props }) => {
+  return (
     <Stack spacing={2} direction="row">
-        <Button 
+      <Button
         variant="contained"
         type="submit"
         fullWidth
-        sx={{mx: "auto"}}
+        sx={{ mx: "auto" }}
         {...props}
-        >{children}
-        </Button>
+      >
+        {children}
+      </Button>
     </Stack>
-    )
+  );
 };
 
 export default PrimaryButton;

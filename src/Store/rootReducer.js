@@ -1,5 +1,12 @@
-import {combineReducers} from 'redux';
-import { themeReducer, userReducer, moviesReducer, loaderReducer } from './Reducers';
+import {
+    combineReducers
+} from 'redux';
+import {
+    themeReducer,
+    userReducer,
+    moviesReducer,
+    loaderReducer
+} from './Reducers';
 
 
 export const rootRedcuer = combineReducers({

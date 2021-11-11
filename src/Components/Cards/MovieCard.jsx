@@ -6,17 +6,19 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CircularProgress from "@mui/material/CircularProgress";
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
-import { useDispatch} from 'react-redux';
-import {useHistory} from 'react-router-dom';
-import {getDetailsAsync} from '../../Thunks';
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { getDetailsAsync, setFavouriteAsync } from "../../Thunks";
 
 export const MovieCard = (props) => {
   const { title, poster_path, release_date, id } = props;
+  const {currentUser} = useSelector(state=> state.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  const sessionId = localStorage.getItem('session_id');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleCardMenuOpen = (event) => {
@@ -26,30 +28,37 @@ export const MovieCard = (props) => {
     setAnchorEl(null);
   };
 
-  const onClick = () => {
+  const onClickMore = () => {
     history.push(`/movie/${id}`);
     dispatch(getDetailsAsync(id));
   };
 
-  const menuId = 'primary-search-account-menu';
+  const onClickFavourite = () => {
+    /* history.push(`/movie/${id}`); */
+    dispatch(setFavouriteAsync(sessionId,currentUser.id,id));
+  };
+
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={()=> history.push('/profile')}>Add to favourite</MenuItem>
-      <MenuItem onClick={onClick}>More...</MenuItem>
+      <MenuItem onClick={onClickFavourite}>
+        Add to favourite
+      </MenuItem>
+      <MenuItem onClick={onClickMore}>More...</MenuItem>
     </Menu>
   );
   return (
@@ -59,13 +68,13 @@ export const MovieCard = (props) => {
         sx={{ position: "absolute", bgcolor: "primary.main", right: 5, top: 5 }}
         onClick={handleCardMenuOpen}
       >
-        <MoreVertIcon sx={{ transform: "rotate(90deg)"}}/>
+        <MoreVertIcon sx={{ transform: "rotate(90deg)" }} />
       </IconButton>
       <CardMedia
         component="img"
         image={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt="Paella dish"
-        onClick={onClick}
+        onClick={onClickMore}
       />
       <CardContent>
         <Box

@@ -1,19 +1,24 @@
 export const movieAction = {
-    FETCH_MOVIES_SUCCESS : '[MOVIE] Fetch movies success',
-	FETCH_SEARCH_SUCCESS: '[MOVIE] Fetch search',
-	CHANGE_SEARCH_ACTION: '[MOVIE] Change search action',
-	GET_DETAILS_SUCCESS: '[MOVIE] Get more details',
+	FETCH_MOVIES_SUCCESS: '[movie] - fetch movies success',
+	FETCH_SEARCH_SUCCESS: '[movie] - fetch search',
+	CHANGE_SEARCH_ACTION: '[movie] - change search action',
+	GET_DETAILS_SUCCESS: '[movie] - get more details',
+	GET_FEVOURITES_SUCCESS: '[movie] - get fevourits success',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
 	type: movieAction.FETCH_MOVIES_SUCCESS,
-	payload: { movies },
+	payload: {
+		movies
+	},
 });
 
 
 export const fetchSearchSuccess = (movies) => ({
 	type: movieAction.FETCH_SEARCH_SUCCESS,
-	payload: { movies },
+	payload: {
+		movies
+	},
 });
 
 export const changeSearchAction = () => ({
@@ -22,5 +27,12 @@ export const changeSearchAction = () => ({
 
 export const getDetailsSuccess = (movie) => ({
 	type: movieAction.GET_DETAILS_SUCCESS,
-	payload: {movie},
+	payload: {
+		movie
+	},
+});
+
+export const getFavouritesSuccess = (movies) => ({
+	type: movieAction.GET_FEVOURITES_SUCCESS,
+	payload: {movies},
 })

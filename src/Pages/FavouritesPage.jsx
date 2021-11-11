@@ -1,11 +1,11 @@
 import React from "react";
 import Container from "@mui/material/Container";
-import { SignUp } from "../Components/SignUp/SignUp";
+import { Favourites } from "../Components/Favourites/Favourites";
 
-export const SignUpPage = () => {
+export const FavouritesPage = () => {
   return (
     <Container maxWidth="xl" sx={{ mt: 2 }}>
-      <SignUp />
+      <Favourites />
     </Container>
   );
 };

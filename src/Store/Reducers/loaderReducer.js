@@ -1,11 +1,14 @@
-import {ON_LOADER, OFF_LOADER} from '../Actions';
+import {
+    ON_LOADER,
+    OFF_LOADER
+} from '../Actions';
 
 export const initialState = {
-    isLoading:false,
+    isLoading: false,
 };
 
-export function loaderReducer (state=initialState, action) {
-    switch(action.type) {
+export function loaderReducer(state = initialState, action) {
+    switch (action.type) {
         case ON_LOADER:
             return {
                 ...state,
@@ -15,7 +18,7 @@ export function loaderReducer (state=initialState, action) {
             return {
                 ...state,
                 isLoading: false,
-                };
+            };
         default:
             return state;
     }

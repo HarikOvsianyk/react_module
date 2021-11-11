@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
@@ -8,13 +8,11 @@ import { Form } from "../UI/Form";
 import { Input } from "../UI/Input";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { useHistory } from "react-router-dom";
-import {useFetching} from '../../Hooks/useFetching';
+import { useFetching } from "../../Hooks/useFetching";
 import * as api from "../../Apis";
-import {useLocation} from 'react-router-dom';
-import {genereteSessionAndGetUser} from '../../Thunks/auth';
-import { useDispatch, useSelector } from 'react-redux';
-
-
+import { useLocation } from "react-router-dom";
+import { genereteSessionAndGetUser } from "../../Thunks/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 export const schema = yup.object().shape({
   email: yup
@@ -28,7 +26,7 @@ export const LogIn = () => {
   const history = useHistory();
   const search = useLocation().search;
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   const {
     register,
@@ -37,27 +35,27 @@ export const LogIn = () => {
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema),
-  }); 
+  });
 
-  const [fetchToken] = useFetching(async()=> {
+  const [fetchToken] = useFetching(async () => {
     const token = await api.generateToken();
 
     const redirectUrl = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/`;
-    window.open(redirectUrl, '_blank', 'noopener noreferrer');
+    window.open(redirectUrl, "_blank", "noopener noreferrer");
   });
 
-  useEffect(()=> {
-    const requestToken = new URLSearchParams(search).get('request_token');
+  useEffect(() => {
+    const requestToken = new URLSearchParams(search).get("request_token");
     if (requestToken) {
       dispatch(genereteSessionAndGetUser(requestToken));
-    } 
-  },[search, dispatch, history]);
+    }
+  }, [search, dispatch, history]);
 
   useEffect(() => {
-		if (user.isLoggedIn) {
-			history.push('/main');
-		}
-	}, [user, history, dispatch]);
+    if (user.isLoggedIn) {
+      history.push("/main");
+    }
+  }, [user, history, dispatch]);
 
   const onSubmit = async (data) => {
     fetchToken();
