@@ -24,4 +24,9 @@ export const fetchSearch = async (search) => {
 			},
 		});
 		return data;
-	}
+};
+
+export const getDetails = async (id) => {
+	const {data} = await authAxios.get(`/movie/${id}`);
+	return data;
+}

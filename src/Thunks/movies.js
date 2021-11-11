@@ -1,5 +1,5 @@
-import {fetchMovies, fetchSearch} from '../Apis';
-import { fetchMoviesSuccess, fetchSearchSuccess } from '../Store/Actions/movies';
+import {fetchMovies, fetchSearch,getDetails} from '../Apis';
+import { fetchMoviesSuccess, fetchSearchSuccess, getDetailsSuccess} from '../Store/Actions/movies';
 import {onLoader, offLoader} from '../Store/Actions';
 
 
@@ -19,4 +19,14 @@ export const fetchSearchAsync = (search) => {
         dispatch(fetchSearchSuccess(movies));
         dispatch(offLoader());
     }
-}
+};
+
+export const getDetailsAsync = (id) => {
+    return async (dispatch) => {
+        dispatch(onLoader());
+        const movie = await getDetails(id);
+        dispatch(getDetailsSuccess(movie));
+        dispatch(offLoader());
+    }
+};
+
