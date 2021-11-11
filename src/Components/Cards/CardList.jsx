@@ -8,7 +8,17 @@ import {fetchMoviesAsync} from '../../Thunks';
 export const CardList = () => {
     const dispatch = useDispatch();
     const {isLoading} = useSelector(state=> state.loader);
-    const {movies} = useSelector(state => state.movies);
+    const {movies,searchMovies, searchAction} = useSelector(state => state.movies);
+    let renderArray = movies;
+
+    if (searchAction) {
+        renderArray = searchMovies
+    }
+
+    if (!searchAction) {
+        renderArray = movies
+    }
+    
 
     useEffect(() => {
         dispatch(fetchMoviesAsync());
@@ -22,8 +32,8 @@ export const CardList = () => {
            ?
            <Loader />
            :
-           movies.results &&
-               movies.results.map((movie) => {
+           renderArray.results &&
+           renderArray.results.map((movie) => {
                 return <MovieCard key={movie.id} {...movie} />;
             })
            }

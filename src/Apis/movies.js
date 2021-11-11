@@ -14,19 +14,14 @@ export const fetchMovies = async (page) => {
 			page: page,
 		},
 	});
-	console.log(data);
 	return data;
 };
 
 export const fetchSearch = async (search) => {
-		const {data} = await authAxios.get('/movie/popular', {
+		const {data} = await authAxios.get('/search/movie', {
 			params: {
-				year: search,
-				with_cast: search,
-				with_genres: search,
-				 with_keywords:search
+				query: search,
 			},
 		});
-		console.log(data);
 		return data;
 	}

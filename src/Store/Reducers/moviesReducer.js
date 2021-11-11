@@ -3,6 +3,7 @@ import {movieAction} from "../Actions/movies";
 export const initialState = {
     movies:[],
     searchMovies: [],
+    searchAction: false,
 };
 
 export function moviesReducer (state=initialState, action) {
@@ -16,7 +17,13 @@ export function moviesReducer (state=initialState, action) {
                 return {
                     ...state,
                     searchMovies: action.payload.movies,
+                    searchAction: true,
                 };
+        case movieAction.CHANGE_SEARCH_ACTION: 
+                return {
+                    ...state,
+                    searchAction: false,
+                }
         default:
             return state;
     }

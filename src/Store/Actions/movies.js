@@ -1,6 +1,7 @@
 export const movieAction = {
     FETCH_MOVIES_SUCCESS : '[MOVIE] Fetch movies success',
-	FETCH_SEARCH_SUCCESS: '[MOVIE] Fetch search'
+	FETCH_SEARCH_SUCCESS: '[MOVIE] Fetch search',
+	CHANGE_SEARCH_ACTION: '[MOVIE] Change search action',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
@@ -10,6 +11,10 @@ export const fetchMoviesSuccess = (movies) => ({
 
 
 export const fetchSearchSuccess = (movies) => ({
-	type: movieAction.FETCH_SEARCH,
+	type: movieAction.FETCH_SEARCH_SUCCESS,
 	payload: { movies },
+});
+
+export const changeSearchAction = () => ({
+	type: movieAction.CHANGE_SEARCH_ACTION,
 });

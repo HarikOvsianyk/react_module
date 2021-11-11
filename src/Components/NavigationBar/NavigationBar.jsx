@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,8 +15,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Switch from '../UI/Switch';
 import {PrimaryButton} from '../UI/PrimaryButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {fetchSearchAsync} from '../../Thunks';
+import {changeSearchAction} from '../../Store/Actions';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -59,11 +60,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const NavigationBar = () => {
+  useEffect(()=> {
+    setSearch('');
+  },[])
+  const {searchAction} = useSelector(state => state.movies);
   const [search, setSearch] = useState('');
   const dispatch = useDispatch();
+  const onClean = () => {
+    dispatch(changeSearchAction());
+  }
   const onSubmit=() => {
-    /* dispatch(fetchSearchAsync(search)); */
-    console.log(search);
+    dispatch(fetchSearchAsync(search));
+    setSearch('');
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -171,6 +179,7 @@ export const NavigationBar = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              value={search}
               placeholder="Search movie…"
               inputProps={{ 'aria-label': 'search' }}
               sx={{width: '140ch'}}
@@ -178,7 +187,12 @@ export const NavigationBar = () => {
             />
   
           </Search>
-          <PrimaryButton sx={{ml:2}} onClick={onSubmit}>Search</PrimaryButton>
+          {searchAction
+          ?
+          <PrimaryButton sx={{ml:2}} onClick={onClean}>Clean</PrimaryButton>
+          :
+          <PrimaryButton sx={{ml:2}} onClick={onSubmit}>Search</PrimaryButton>}
+
           <Switch />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

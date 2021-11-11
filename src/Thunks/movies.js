@@ -17,7 +17,6 @@ export const fetchSearchAsync = (search) => {
         dispatch(onLoader());
         const movies = await fetchSearch(search);
         dispatch(fetchSearchSuccess(movies));
-        dispatch(offLoader())
-        console.log(movies);
+        dispatch(offLoader());
     }
 }
