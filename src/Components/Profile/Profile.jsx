@@ -14,9 +14,9 @@ export const Profile = () => {
     <Box>
       <PrimaryButton
         onClick={() => history.push(`/main`)}
-        sx={{ width: 200, left: -400 }}
+        sx={{ width: 200, left: -600 }}
       >
-        Back to Sign Up
+        Back
       </PrimaryButton>
       <Card sx={{ maxWidth: 900, width: 350, position: "relative", m: 3 }}>
         <CardMedia

@@ -34,6 +34,7 @@ export const CardList = () => {
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
+        justifyContent:'space-between'
       }}
     >
       {isLoading ? (

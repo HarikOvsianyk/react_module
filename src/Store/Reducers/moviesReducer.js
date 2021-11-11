@@ -6,6 +6,7 @@ export const initialState = {
   searchAction: false,
   getDetails: {},
   favourites: [],
+  isFavourites: false,
 };
 
 export function moviesReducer(state = initialState, action) {
@@ -14,6 +15,7 @@ export function moviesReducer(state = initialState, action) {
       return {
         ...state,
         movies: action.payload.movies,
+        isFavourites: false,
       };
     case movieAction.FETCH_SEARCH_SUCCESS:
       return {
@@ -36,6 +38,7 @@ export function moviesReducer(state = initialState, action) {
         return {
           ...state,
           favourites: action.payload,
+          isFavourites: true,
         };
     default:
       return state;

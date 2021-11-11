@@ -3,16 +3,23 @@ import { MovieCard } from "../Cards/MovieCard";
 import Loader from "../UI/Loader/Loader";
 import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
-
+import { PrimaryButton } from "../UI/PrimaryButton";
+import { useHistory } from "react-router-dom";
 
 export const Favourites = () => {
   const { isLoading } = useSelector((state) => state.loader);
-  const { favourites } = useSelector(state => state.movies);
- console.log(favourites);
-
+  const { favourites } = useSelector((state) => state.movies);
+  const history = useHistory();
 
   return (
-    <Container
+    <Container>
+        <PrimaryButton
+  onClick={() => history.push(`/main`)}
+  sx={{ width: 200, left:-200 }}
+>
+  Back
+</PrimaryButton>
+      <Container
       maxWidth="xl"
       sx={{
         mt: 5,
@@ -20,8 +27,10 @@ export const Favourites = () => {
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
+        justifyContent:'space-between'
       }}
     >
+
       {isLoading ? (
         <Loader />
       ) : (
@@ -30,6 +39,7 @@ export const Favourites = () => {
           return <MovieCard key={movie.id} {...movie} />;
         })
       )}
+    </Container>
     </Container>
   );
 };

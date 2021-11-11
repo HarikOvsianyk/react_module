@@ -4,11 +4,28 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import CardMedia from "@mui/material/CardMedia";
 import { useSelector } from "react-redux";
+import { PrimaryButton } from "../UI/PrimaryButton";
+import { useHistory } from "react-router-dom";
 
 export const Movie = () => {
-  const { getDetails } = useSelector((state) => state.movies);
+  const { getDetails, isFavourites } = useSelector((state) => state.movies);
+  const history = useHistory();
   return (
     <Box sx={{ width: 900, m: "0 auto" }}>
+      {isFavourites
+      ?       <PrimaryButton
+      onClick={() => history.push(`/favourites`)}
+      sx={{ width: 200, left: -300 }}
+    >
+      Back
+    </PrimaryButton>
+    :
+    <PrimaryButton
+    onClick={() => history.push(`/main`)}
+    sx={{ width: 200, left: -300 }}
+  >
+    Back
+  </PrimaryButton>}
       <Paper>
         <Box sx={{ display: "flex" }}>
           <CardMedia

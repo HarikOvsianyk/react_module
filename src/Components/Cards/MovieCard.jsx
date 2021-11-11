@@ -16,6 +16,7 @@ import { getDetailsAsync, setFavouriteAsync } from "../../Thunks";
 export const MovieCard = (props) => {
   const { title, poster_path, release_date, id } = props;
   const {currentUser} = useSelector(state=> state.user);
+  const {isFavourites} = useSelector(state=> state.movies);
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionId = localStorage.getItem('session_id');
@@ -34,7 +35,6 @@ export const MovieCard = (props) => {
   };
 
   const onClickFavourite = () => {
-    /* history.push(`/movie/${id}`); */
     dispatch(setFavouriteAsync(sessionId,currentUser.id,id));
   };
 
@@ -55,9 +55,12 @@ export const MovieCard = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      {isFavourites
+      ? ''
+      :
       <MenuItem onClick={onClickFavourite}>
         Add to favourite
-      </MenuItem>
+      </MenuItem>}
       <MenuItem onClick={onClickMore}>More...</MenuItem>
     </Menu>
   );
