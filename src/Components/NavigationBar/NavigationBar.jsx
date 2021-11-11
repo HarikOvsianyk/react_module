@@ -14,6 +14,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Switch from '../UI/Switch';
+import Avatar from '@mui/material/Avatar';
 import {PrimaryButton} from '../UI/PrimaryButton';
 import { useDispatch,useSelector } from 'react-redux';
 import {fetchSearchAsync} from '../../Thunks';
@@ -64,6 +65,7 @@ export const NavigationBar = () => {
     setSearch('');
   },[])
   const {searchAction} = useSelector(state => state.movies);
+  const {currentUser, isLoggedIn} = useSelector(state=>state.user);
   const [search, setSearch] = useState('');
   const dispatch = useDispatch();
   const onClean = () => {
@@ -196,17 +198,21 @@ export const NavigationBar = () => {
           <Switch />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {isLoggedIn
+            ? 
+            <Avatar src={`https://image.tmdb.org/t/p/w200/${currentUser.avatar.tmdb.avatar_path}`} alt={'some'} sx={{width:50, height:50}} onClick={handleProfileMenuOpen}/>
+          :
+          (<IconButton
+          size="large"
+          edge="end"
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>)}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
