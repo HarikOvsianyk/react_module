@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import CardMedia from "@mui/material/CardMedia";
 import CircularProgress from "@mui/material/CircularProgress";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useDispatch,useSelector } from "react-redux";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { useHistory } from "react-router-dom";
@@ -16,8 +18,18 @@ export const Movie = () => {
   const sessionId = localStorage.getItem('session_id');
   const history = useHistory();
   const dispatch = useDispatch();
+  const notify = () => toast.success('Added tp favourite list', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,    
+    });
   const onClickFavourite = () => {
     dispatch(setFavouriteAsync(sessionId,currentUser.id,getDetails.id));
+    notify();
   };
   return (
     <Box sx={{ width: 900, m: "0 auto", position: "relative" }}>
@@ -100,6 +112,7 @@ export const Movie = () => {
               >
                 {`${getDetails.vote_average * 10}%`}
               </Typography>
+              <ToastContainer/>
             </Box>
           </Box>
         </Box>

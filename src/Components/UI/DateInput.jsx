@@ -21,6 +21,7 @@ export const DateInput = () => {
           onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
           minDate={new Date("1921-06-06")}
+          maxDate={new Date()}
         />
       </Stack>
     </LocalizationProvider>

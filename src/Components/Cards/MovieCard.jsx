@@ -4,6 +4,8 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
@@ -33,9 +35,18 @@ export const MovieCard = (props) => {
     history.push(`/movie/${id}`);
     dispatch(getDetailsAsync(id));
   };
-
+  const notify = () => toast.success('Added tp favourite list', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,    
+    });
   const onClickFavourite = () => {
     dispatch(setFavouriteAsync(sessionId,currentUser.id,id));
+    notify();
   };
 
   const menuId = "primary-search-account-menu";
@@ -114,6 +125,7 @@ export const MovieCard = (props) => {
         <Typography component="h5" variant="subtitle1">
           {title}
         </Typography>
+        <ToastContainer/>
         <Typography>{release_date}</Typography>
       </CardContent>
       {renderMenu}

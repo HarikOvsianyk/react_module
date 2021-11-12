@@ -2,6 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Form } from "../UI/Form";
@@ -23,8 +25,17 @@ export const SignUp = () => {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-
+  const notify = () => toast.success('It was mockup registration', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,    
+    });
   const onSubmit = () => {
+    notify();
     reset();
   };
 
@@ -34,7 +45,7 @@ export const SignUp = () => {
         onClick={() => history.push(`/`)}
         sx={{ width: 200, left: 0 }}
       >
-        Back to Sign Up
+        Back to Log In
       </PrimaryButton>
       <Container sx={{ width: "400px" }}>
         <Typography component="h2" variant="h5">
@@ -107,6 +118,7 @@ export const SignUp = () => {
             helperText={errors?.username?.message}
           />
           <PrimaryButton>Registration</PrimaryButton>
+          <ToastContainer/>
         </Form>
       </Container>
     </Box>
