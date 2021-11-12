@@ -7,6 +7,7 @@ export const initialState = {
   getDetails: {},
   favourites: [],
   isFavourites: false,
+  genresList: [],
 };
 
 export function moviesReducer(state = initialState, action) {
@@ -39,6 +40,11 @@ export function moviesReducer(state = initialState, action) {
           favourites: action.payload,
           isFavourites: true,
         };
+        case movieAction.GET_GENRES_LIST_SUCCESS:
+          return {
+            ...state,
+            genresList: action.payload.genres
+          };
     default:
       return state;
   }

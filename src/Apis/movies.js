@@ -62,3 +62,8 @@ export const getFavourite = async (accountId, sessionId) => {
   );
   return data;
 };
+
+export const getGenresList = async () => {
+  const {data} = await authAxios.get('/genre/movie/list');
+  return data;
+}

@@ -3,7 +3,8 @@ export const movieAction = {
 	FETCH_SEARCH_SUCCESS: '[movie] - fetch search',
 	CHANGE_SEARCH_ACTION: '[movie] - change search action',
 	GET_DETAILS_SUCCESS: '[movie] - get more details',
-	GET_FEVOURITES_SUCCESS: '[movie] - get fevourits success',
+	GET_FEVOURITES_SUCCESS: '[movie] - get fevourites success',
+	GET_GENRES_LIST_SUCCESS: '[movie] - get genres list success',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
@@ -35,4 +36,9 @@ export const getDetailsSuccess = (movie) => ({
 export const getFavouritesSuccess = (movies) => ({
 	type: movieAction.GET_FEVOURITES_SUCCESS,
 	payload: {movies},
-})
+});
+
+export const getGenresListSuccess = (genres) => ({
+	type: movieAction.GET_GENRES_LIST_SUCCESS,
+	payload: {genres},
+});

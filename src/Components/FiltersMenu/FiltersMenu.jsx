@@ -7,8 +7,11 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useSelector } from "react-redux";
 
 export const FiltersMenu = () => {
+    const {genresList} = useSelector(state=> state.movies);
+    console.log(genresList);
   const [alignment, setAlignment] = React.useState("web");
 
   const handleChange = (event, newAlignment) => {
@@ -22,7 +25,7 @@ export const FiltersMenu = () => {
   };
 
   return (
-    <Box sx={{ width: 250, mt: 8 }}>
+    <Box sx={{ width: 300, mt: 8 }}>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChangePanel("panel1")}
@@ -41,11 +44,10 @@ export const FiltersMenu = () => {
               value={alignment}
               exclusive
               onChange={handleChange}
-              sx={{display:'flex', flexDirection:'column'}}
+              sx={{display:'flex', flexWrap:'wrap'}}
             >
-              <ToggleButton value="Action">Action</ToggleButton>
-              <ToggleButton value="Triller">Triller</ToggleButton>
-              <ToggleButton value="Drama">Drama</ToggleButton>
+              {genresList && genresList.map(genre => <ToggleButton key={genre.id} value={genre.name}>{genre.name}</ToggleButton>)}
+
             </ToggleButtonGroup>
           </Typography>
         </AccordionDetails>

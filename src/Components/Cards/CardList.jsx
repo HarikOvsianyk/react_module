@@ -3,7 +3,7 @@ import { MovieCard } from "./MovieCard";
 import Loader from "../UI/Loader/Loader";
 import Container from "@mui/material/Container";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMoviesAsync } from "../../Thunks";
+import { fetchMoviesAsync,getGenresListAsync } from "../../Thunks";
 
 export const CardList = () => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ export const CardList = () => {
 
   useEffect(() => {
     dispatch(fetchMoviesAsync());
+    dispatch(getGenresListAsync());
   }, [dispatch]);
 
   return (
