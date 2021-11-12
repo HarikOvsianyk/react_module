@@ -5,6 +5,7 @@ export const movieAction = {
 	GET_DETAILS_SUCCESS: '[movie] - get more details',
 	GET_FEVOURITES_SUCCESS: '[movie] - get fevourites success',
 	GET_GENRES_LIST_SUCCESS: '[movie] - get genres list success',
+	GET_LANGUAGES_LIST_SUCCESS: '[movie] - get languages list success',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
@@ -41,4 +42,9 @@ export const getFavouritesSuccess = (movies) => ({
 export const getGenresListSuccess = (genres) => ({
 	type: movieAction.GET_GENRES_LIST_SUCCESS,
 	payload: {genres},
+});
+
+export const getLanguagesListSuccess = (languages) => ({
+	type: movieAction.GET_LANGUAGES_LIST_SUCCESS,
+	payload: {languages},
 });

@@ -1,10 +1,11 @@
-import { fetchMovies, fetchSearch, getDetails,setFavourite, getFavourite,getGenresList } from "../Apis";
+import { fetchMovies, fetchSearch, getDetails,setFavourite, getFavourite,getGenresList,getLanguagesList } from "../Apis";
 import {
   fetchMoviesSuccess,
   fetchSearchSuccess,
   getDetailsSuccess,
   getFavouritesSuccess,
-  getGenresListSuccess
+  getGenresListSuccess,
+  getLanguagesListSuccess
 } from "../Store/Actions/movies";
 import { onLoader, offLoader } from "../Store/Actions";
 
@@ -53,11 +54,15 @@ export const getFavouritesAsync = (accountId, sessionId) => {
 
 export const getGenresListAsync = () => {
   return async (dispatch) => {
-    /* dispatch(onLoader()); */
     const genres = await getGenresList();
     dispatch(getGenresListSuccess(genres.genres));
-    /* dispatch(offLoader()); */
   }
 };
 
+export const getLanguagesListAsync = () => {
+  return async (dispatch) => {
+    const langauges = await getLanguagesList();
+    dispatch(getLanguagesListSuccess(langauges));
+  }
+};
 

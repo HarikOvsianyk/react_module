@@ -10,8 +10,8 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useSelector } from "react-redux";
 
 export const FiltersMenu = () => {
-    const {genresList} = useSelector(state=> state.movies);
-    console.log(genresList);
+    const {genresList, languagesList} = useSelector(state=> state.movies);
+    console.log(languagesList);
   const [alignment, setAlignment] = React.useState("web");
 
   const handleChange = (event, newAlignment) => {
@@ -25,7 +25,7 @@ export const FiltersMenu = () => {
   };
 
   return (
-    <Box sx={{ width: 300, mt: 8 }}>
+    <Box sx={{ width: 400, mt: 8 }}>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChangePanel("panel1")}
@@ -99,11 +99,9 @@ export const FiltersMenu = () => {
               value={alignment}
               exclusive
               onChange={handleChange}
-              sx={{display:'flex', flexDirection:'column'}}
+              sx={{display:'flex', flexWrap:'wrap'}}
             >
-              <ToggleButton value="English">English</ToggleButton>
-              <ToggleButton value="French">French</ToggleButton>
-              <ToggleButton value="Italian">Italian</ToggleButton>
+              {languagesList.languages && languagesList.languages.map(langauge => <ToggleButton key={langauge.iso_639_1} value={langauge.english_name}>{langauge.english_name}</ToggleButton>)}
             </ToggleButtonGroup>
           </Typography>
         </AccordionDetails>
