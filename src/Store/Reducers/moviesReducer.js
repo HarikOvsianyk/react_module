@@ -8,7 +8,9 @@ export const initialState = {
   favourites: [],
   isFavourites: false,
   genresList: [],
-  languagesList:[],
+  languagesList: [],
+  isMoviesByGenre: false,
+  moviesByGenre: [],
 };
 
 export function moviesReducer(state = initialState, action) {
@@ -35,22 +37,28 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         getDetails: action.payload.movie,
       };
-      case movieAction.GET_FEVOURITES_SUCCESS:
-        return {
-          ...state,
-          favourites: action.payload,
-          isFavourites: true,
-        };
-        case movieAction.GET_GENRES_LIST_SUCCESS:
-          return {
-            ...state,
-            genresList: action.payload.genres
-          };
-          case movieAction.GET_LANGUAGES_LIST_SUCCESS:
-            return {
-              ...state,
-              languagesList: action.payload
-            };
+    case movieAction.GET_FEVOURITES_SUCCESS:
+      return {
+        ...state,
+        favourites: action.payload,
+        isFavourites: true,
+      };
+    case movieAction.GET_GENRES_LIST_SUCCESS:
+      return {
+        ...state,
+        genresList: action.payload.genres,
+      };
+    case movieAction.GET_LANGUAGES_LIST_SUCCESS:
+      return {
+        ...state,
+        languagesList: action.payload,
+      };
+    case movieAction.GET_MOVIES_BY_GENRE_SUCCESS:
+      return {
+        ...state,
+        moviesByGenre: action.payload.movies,
+        isMoviesByGenre: true,
+      };
     default:
       return state;
   }

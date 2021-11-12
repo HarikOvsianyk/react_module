@@ -1,11 +1,12 @@
-import { fetchMovies, fetchSearch, getDetails,setFavourite, getFavourite,getGenresList,getLanguagesList } from "../Apis";
+import { fetchMovies, fetchSearch, getDetails,setFavourite, getFavourite,getGenresList,getLanguagesList,getMoviesByGenre } from "../Apis";
 import {
   fetchMoviesSuccess,
   fetchSearchSuccess,
   getDetailsSuccess,
   getFavouritesSuccess,
   getGenresListSuccess,
-  getLanguagesListSuccess
+  getLanguagesListSuccess,
+  getMoviesByGenreSuccess
 } from "../Store/Actions/movies";
 import { onLoader, offLoader } from "../Store/Actions";
 
@@ -63,6 +64,16 @@ export const getLanguagesListAsync = () => {
   return async (dispatch) => {
     const langauges = await getLanguagesList();
     dispatch(getLanguagesListSuccess(langauges));
+  }
+};
+
+export const getMoviesByGenreAsync = (genre, page = 1) => {
+  return async (dispatch) => {
+    dispatch(onLoader());
+    const movies = await getMoviesByGenre(genre, page = 1);
+    dispatch(getMoviesByGenreSuccess(movies));
+    dispatch(offLoader());
+    console.log(movies);
   }
 };
 
