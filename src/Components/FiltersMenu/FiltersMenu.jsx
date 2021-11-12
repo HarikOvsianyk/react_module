@@ -12,7 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
-import { getMoviesByGenreAsync } from "../../Thunks";
+import { getMoviesByGenreAsync,getMoviesByLanguageAsync } from "../../Thunks";
 import {  useDispatch } from "react-redux";
 
 export const FiltersMenu = () => {
@@ -23,7 +23,11 @@ export const FiltersMenu = () => {
 
   const getFilterByGenre = (genre) => {
       dispatch(getMoviesByGenreAsync(genre))
-  }
+  };
+
+  const getFilterByLanguage = (language) => {
+    dispatch(getMoviesByLanguageAsync(language))
+};
 
   const handleChangeSelect = (event) => {
     setLanguage(event.target.value);
@@ -125,6 +129,7 @@ export const FiltersMenu = () => {
                     <MenuItem
                       key={langauge.iso_639_1}
                       value={langauge.english_name}
+                      onClick={() => getFilterByLanguage(langauge.iso_639_1)}
                     >
                       {langauge.english_name}
                     </MenuItem>

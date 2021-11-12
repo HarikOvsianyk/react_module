@@ -11,6 +11,8 @@ export const initialState = {
   languagesList: [],
   isMoviesByGenre: false,
   moviesByGenre: [],
+  isMoviesByLanguage: false,
+  moviesByLanguage: [],
 };
 
 export function moviesReducer(state = initialState, action) {
@@ -59,6 +61,12 @@ export function moviesReducer(state = initialState, action) {
         moviesByGenre: action.payload.movies,
         isMoviesByGenre: true,
       };
+      case movieAction.GET_MOVIES_BY_LANGUAGE_SUCCESS:
+        return {
+          ...state,
+          moviesByLanguage: action.payload.movies,
+          isMoviesByLanguage: true,
+        };
     default:
       return state;
   }

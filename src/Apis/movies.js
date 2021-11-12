@@ -81,4 +81,14 @@ export const getMoviesByGenre = async (genre) => {
 		},
   });
   return data;
-} 
+}; 
+
+export const getMoviesByLanguage = async (langauge) => {
+  const {data} = await authAxios.get('/discover/movie', {
+		params: {
+			sort_by: 'popularity.desc',
+			with_original_language: langauge,
+		},
+  });
+  return data;
+}; 
