@@ -13,6 +13,8 @@ export const initialState = {
   moviesByGenre: [],
   isMoviesByLanguage: false,
   moviesByLanguage: [],
+  isMoviesByYear: false,
+  moviesByYear: [],
 };
 
 export function moviesReducer(state = initialState, action) {
@@ -67,6 +69,12 @@ export function moviesReducer(state = initialState, action) {
           moviesByLanguage: action.payload.movies,
           isMoviesByLanguage: true,
         };
+        case movieAction.GET_MOVIES_BY_YEAR_SUCCESS:
+          return {
+            ...state,
+            moviesByYear: action.payload.movies,
+            isMoviesByYear: true,
+          };
     default:
       return state;
   }

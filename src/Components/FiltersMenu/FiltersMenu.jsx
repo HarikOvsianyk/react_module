@@ -11,23 +11,37 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import Stack from "@mui/material/Stack";
+import Button from '@mui/material/Button';
 import { useSelector } from "react-redux";
-import { getMoviesByGenreAsync,getMoviesByLanguageAsync } from "../../Thunks";
-import {  useDispatch } from "react-redux";
+import { getMoviesByGenreAsync, getMoviesByLanguageAsync,getMoviesByYearAsync } from "../../Thunks";
+import { useDispatch } from "react-redux";
 
 export const FiltersMenu = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { genresList, languagesList } = useSelector((state) => state.movies);
   const [alignment, setAlignment] = React.useState("web");
   const [language, setLanguage] = React.useState("");
+  const [value, setValue] = React.useState(new Date());
+  let year = value.getFullYear();
 
+  console.log(year);
+  
   const getFilterByGenre = (genre) => {
-      dispatch(getMoviesByGenreAsync(genre))
+    dispatch(getMoviesByGenreAsync(genre));
   };
 
   const getFilterByLanguage = (language) => {
-    dispatch(getMoviesByLanguageAsync(language))
-};
+    dispatch(getMoviesByLanguageAsync(language));
+  };
+
+  const getFilterByYear = (year) => {
+      dispatch(getMoviesByYearAsync(year));
+  };
 
   const handleChangeSelect = (event) => {
     setLanguage(event.target.value);
@@ -66,7 +80,11 @@ export const FiltersMenu = () => {
           >
             {genresList &&
               genresList.map((genre) => (
-                <ToggleButton key={genre.id} value={genre.name} onClick={() => getFilterByGenre(genre.id)}>
+                <ToggleButton
+                  key={genre.id}
+                  value={genre.name}
+                  onClick={() => getFilterByGenre(genre.id)}
+                >
                   {genre.name}
                 </ToggleButton>
               ))}
@@ -87,17 +105,23 @@ export const FiltersMenu = () => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <ToggleButtonGroup
-            color="primary"
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-            sx={{ display: "flex", flexDirection: "column" }}
-          >
-            <ToggleButton value="2000s">2000s</ToggleButton>
-            <ToggleButton value="2010s">2010s</ToggleButton>
-            <ToggleButton value="2020s">2020s</ToggleButton>
-          </ToggleButtonGroup>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Stack spacing={3}>
+              <DatePicker
+                views={["year"]}
+                label="Select year"
+                maxDate={new Date()}
+                value={value}
+                onChange={(newValue) => {
+                  setValue(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} helperText={null} />
+                )}
+              />
+              <Button variant="contained" onClick={()=> getFilterByYear(year)}>Search</Button>
+            </Stack>
+          </LocalizationProvider>
         </AccordionDetails>
       </Accordion>
       <Accordion

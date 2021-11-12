@@ -92,3 +92,13 @@ export const getMoviesByLanguage = async (langauge) => {
   });
   return data;
 }; 
+
+export const getMoviesByYear = async (year) => {
+  const {data} = await authAxios.get('/discover/movie', {
+		params: {
+			sort_by: 'popularity.desc',
+			primary_release_year: year,
+		},
+  });
+  return data;
+}; 
