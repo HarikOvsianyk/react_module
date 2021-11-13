@@ -8,7 +8,7 @@ import { fetchMoviesAsync,getGenresListAsync,getLanguagesListAsync } from "../..
 export const CardList = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.loader);
-  const { movies, searchMovies, searchAction,isMoviesByGenre,moviesByGenre, moviesByLanguage, isMoviesByLanguage, isMoviesByYear, moviesByYear } = useSelector(
+  const { movies, searchMovies, searchAction, discoverMovies, isDiscoverMovies } = useSelector(
     (state) => state.movies
   );
 
@@ -18,20 +18,13 @@ export const CardList = () => {
     renderArray = searchMovies;
   };
 
-  if (!searchAction && !isMoviesByGenre && !isMoviesByLanguage && !isMoviesByYear) {
+  if (!searchAction && !isDiscoverMovies) {
     renderArray = movies;
   };
 
-  if (isMoviesByGenre) {
-    renderArray = moviesByGenre;
-  };
 
-  if (isMoviesByLanguage) {
-    renderArray = moviesByLanguage;
-  };
-
-  if (isMoviesByYear) {
-    renderArray = moviesByYear;
+  if (isDiscoverMovies) {
+    renderArray = discoverMovies;
   };
 
   useEffect(() => {

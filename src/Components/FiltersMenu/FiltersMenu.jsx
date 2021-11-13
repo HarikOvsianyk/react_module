@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from "react";
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -16,33 +16,20 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Stack from "@mui/material/Stack";
-import Button from '@mui/material/Button';
 import {PrimaryButton} from '../UI/PrimaryButton';
 import { useSelector } from "react-redux";
-import { getMoviesByGenreAsync, getMoviesByLanguageAsync,getMoviesByYearAsync } from "../../Thunks";
+import { getDiscoverMoviesAsync } from "../../Thunks";
 import { useDispatch } from "react-redux";
 import {changeSearchActions} from '../../Store/Actions';
 
 export const FiltersMenu = () => {
   const dispatch = useDispatch();
   const { genresList, languagesList } = useSelector((state) => state.movies);
-  const { searchAction, isMoviesByGenre, isMoviesByLanguage, isMoviesByYear } = useSelector((state) => state.movies);
+  const { searchAction, isDiscoverMovies } = useSelector((state) => state.movies);
   const [alignment, setAlignment] = React.useState("web");
   const [language, setLanguage] = React.useState("");
   const [value, setValue] = React.useState(new Date());
-  let year = value.getFullYear();
-  
-  const getFilterByGenre = (genre) => {
-    dispatch(getMoviesByGenreAsync(genre));
-  };
 
-  const getFilterByLanguage = (language) => {
-    dispatch(getMoviesByLanguageAsync(language));
-  };
-
-  const getFilterByYear = (year) => {
-      dispatch(getMoviesByYearAsync(year));
-  };
 
   const handleChangeSelect = (event) => {
     setLanguage(event.target.value);
@@ -58,13 +45,28 @@ export const FiltersMenu = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  let [genreDiscover, setGenreDiscover]=useState('');
+  let [languageDiscover, setLanguageDiscover] = useState('');
+  let [yearDiscover, setYearDiscover] = useState(value);
+
+  let year = yearDiscover.getFullYear();
+
+
+  const getDiscoverMovies = (genreDicover,languageDiscover, year ) => {
+    dispatch(getDiscoverMoviesAsync(genreDicover,languageDiscover, year))
+  }
+
   const getClear = () => {
     dispatch(changeSearchActions());
+    handleChange();
+    setExpanded(false);
+    setValue(new Date());
+    setLanguage('');
   };
 
   return (
     <Box sx={{ width: 400, mt: 8 }}>
-      {(searchAction || isMoviesByGenre || isMoviesByLanguage || isMoviesByYear)
+      {(searchAction || isDiscoverMovies)
         ?
         <PrimaryButton onClick={getClear}>Clear search</PrimaryButton>
         :
@@ -94,7 +96,7 @@ export const FiltersMenu = () => {
                 <ToggleButton
                   key={genre.id}
                   value={genre.name}
-                  onClick={() => getFilterByGenre(genre.id)}
+                  onClick={() => setGenreDiscover(genre.id)}
                 >
                   {genre.name}
                 </ToggleButton>
@@ -125,12 +127,12 @@ export const FiltersMenu = () => {
                 value={value}
                 onChange={(newValue) => {
                   setValue(newValue);
+                  setYearDiscover(newValue);
                 }}
                 renderInput={(params) => (
                   <TextField {...params} helperText={null} />
                 )}
               />
-              <Button variant="contained" onClick={()=> getFilterByYear(year)}>Search</Button>
             </Stack>
           </LocalizationProvider>
         </AccordionDetails>
@@ -164,7 +166,7 @@ export const FiltersMenu = () => {
                     <MenuItem
                       key={langauge.iso_639_1}
                       value={langauge.english_name}
-                      onClick={() => getFilterByLanguage(langauge.iso_639_1)}
+                      onClick={() => setLanguageDiscover(langauge.iso_639_1)}
                     >
                       {langauge.english_name}
                     </MenuItem>
@@ -174,6 +176,10 @@ export const FiltersMenu = () => {
           </Box>
         </AccordionDetails>
       </Accordion>
+      <PrimaryButton onClick={() => {
+        getDiscoverMovies(genreDiscover,languageDiscover, year);
+        setExpanded(false);
+        }}>Search</PrimaryButton>
     </Box>
   );
 };

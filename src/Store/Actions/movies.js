@@ -6,9 +6,7 @@ export const movieAction = {
 	GET_FEVOURITES_SUCCESS: '[movie] - get fevourites success',
 	GET_GENRES_LIST_SUCCESS: '[movie] - get genres list success',
 	GET_LANGUAGES_LIST_SUCCESS: '[movie] - get languages list success',
-	GET_MOVIES_BY_GENRE_SUCCESS: '[movie] - get movies by genre success',
-	GET_MOVIES_BY_LANGUAGE_SUCCESS: '[movie] - get movies by language success',
-	GET_MOVIES_BY_YEAR_SUCCESS: '[movie] - get movies by year success',
+	GET_MOVIES_DISCOVER_SUCCESS: '[movie] - get movies discover success',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
@@ -52,17 +50,8 @@ export const getLanguagesListSuccess = (languages) => ({
 	payload: {languages},
 });
 
-export const getMoviesByGenreSuccess = (movies) => ({
-	type: movieAction.GET_MOVIES_BY_GENRE_SUCCESS,
-	payload: {movies},
-});
 
-export const getMoviesByLanguageSuccess = (movies) => ({
-	type: movieAction.GET_MOVIES_BY_LANGUAGE_SUCCESS,
-	payload: {movies},
-});
-
-export const getMoviesByYearSuccess = (movies) => ({
-	type: movieAction.GET_MOVIES_BY_YEAR_SUCCESS,
+export const getMoviesDiscoverSuccess = (movies) => ({
+	type: movieAction.GET_MOVIES_DISCOVER_SUCCESS,
 	payload: {movies},
 });

@@ -1,4 +1,4 @@
-import { fetchMovies, fetchSearch, getDetails,setFavourite, getFavourite,getGenresList,getLanguagesList,getMoviesByGenre,getMoviesByLanguage,getMoviesByYear } from "../Apis";
+import { fetchMovies, fetchSearch, getDetails,setFavourite, getFavourite,getGenresList,getLanguagesList,getDiscoverMovies } from "../Apis";
 import {
   fetchMoviesSuccess,
   fetchSearchSuccess,
@@ -6,9 +6,7 @@ import {
   getFavouritesSuccess,
   getGenresListSuccess,
   getLanguagesListSuccess,
-  getMoviesByGenreSuccess,
-  getMoviesByLanguageSuccess,
-  getMoviesByYearSuccess,
+  getMoviesDiscoverSuccess
 } from "../Store/Actions/movies";
 import { onLoader, offLoader } from "../Store/Actions";
 
@@ -69,29 +67,12 @@ export const getLanguagesListAsync = () => {
   }
 };
 
-export const getMoviesByGenreAsync = (genre, page = 1) => {
-  return async (dispatch) => {
-    dispatch(onLoader());
-    const movies = await getMoviesByGenre(genre, page = 1);
-    dispatch(getMoviesByGenreSuccess(movies));
-    dispatch(offLoader());
-  }
-};
 
-export const getMoviesByLanguageAsync = (language, page = 1) => {
+export const getDiscoverMoviesAsync = (genre,language,year, page = 1) => {
   return async (dispatch) => {
     dispatch(onLoader());
-    const movies = await getMoviesByLanguage(language, page = 1);
-    dispatch(getMoviesByLanguageSuccess(movies));
-    dispatch(offLoader());
-  }
-};
-
-export const getMoviesByYearAsync = (year, page = 1) => {
-  return async (dispatch) => {
-    dispatch(onLoader());
-    const movies = await getMoviesByYear(year, page = 1);
-    dispatch(getMoviesByYearSuccess(movies));
+    const movies = await getDiscoverMovies(genre,language,year, page = 1);
+    dispatch(getMoviesDiscoverSuccess(movies));
     dispatch(offLoader());
     console.log(movies);
   }

@@ -9,12 +9,8 @@ export const initialState = {
   isFavourites: false,
   genresList: [],
   languagesList: [],
-  isMoviesByGenre: false,
-  moviesByGenre: [],
-  isMoviesByLanguage: false,
-  moviesByLanguage: [],
-  isMoviesByYear: false,
-  moviesByYear: [],
+  discoverMovies: [],
+  isDiscoverMovies: false,
 };
 
 export function moviesReducer(state = initialState, action) {
@@ -30,17 +26,13 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         searchMovies: action.payload.movies,
         searchAction: true,
-        isMoviesByYear: false,
-        isMoviesByGenre: false,
-        isMoviesByLanguage: false,
+        isDiscoverMovies: false,
       };
     case movieAction.CHANGE_SEARCH_ACTIONS:
       return {
         ...state,
         searchAction: false,
-        isMoviesByYear: false,
-        isMoviesByGenre: false,
-        isMoviesByLanguage: false,
+        isDiscoverMovies: false,
       };
     case movieAction.GET_DETAILS_SUCCESS:
       return {
@@ -63,33 +55,13 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         languagesList: action.payload,
       };
-    case movieAction.GET_MOVIES_BY_GENRE_SUCCESS:
+    case movieAction.GET_MOVIES_DISCOVER_SUCCESS:
       return {
         ...state,
-        moviesByGenre: action.payload.movies,
-        isMoviesByGenre: true,
+        discoverMovies: action.payload.movies,
         searchAction: false,
-        isMoviesByLanguage: false,
-        isMoviesByYear: false,
+        isDiscoverMovies: true,
       };
-      case movieAction.GET_MOVIES_BY_LANGUAGE_SUCCESS:
-        return {
-          ...state,
-          moviesByLanguage: action.payload.movies,
-          isMoviesByLanguage: true,
-          isMoviesByGenre:false,
-          searchAction: false,
-          isMoviesByYear: false,
-        };
-        case movieAction.GET_MOVIES_BY_YEAR_SUCCESS:
-          return {
-            ...state,
-            moviesByYear: action.payload.movies,
-            isMoviesByYear: true,
-            isMoviesByGenre: false,
-            isMoviesByLanguage: false,
-            searchAction: false,
-          };
     default:
       return state;
   }
