@@ -10,7 +10,7 @@ import {
 } from "../Store/Actions/movies";
 import { onLoader, offLoader } from "../Store/Actions";
 
-export const fetchMoviesAsync = (page = 1) => {
+export const fetchMoviesAsync = (page) => {
   return async (dispatch) => {
     dispatch(onLoader());
     const movies = await fetchMovies(page);
@@ -68,10 +68,10 @@ export const getLanguagesListAsync = () => {
 };
 
 
-export const getDiscoverMoviesAsync = (genre,language,year, page = 1) => {
+export const getDiscoverMoviesAsync = (genre,language,year,page) => {
   return async (dispatch) => {
     dispatch(onLoader());
-    const movies = await getDiscoverMovies(genre,language,year, page = 1);
+    const movies = await getDiscoverMovies(genre,language,year, page);
     dispatch(getMoviesDiscoverSuccess(movies));
     dispatch(offLoader());
     console.log(movies);

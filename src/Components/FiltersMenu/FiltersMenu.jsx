@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -25,7 +25,7 @@ import {changeSearchActions} from '../../Store/Actions';
 export const FiltersMenu = () => {
   const dispatch = useDispatch();
   const { genresList, languagesList } = useSelector((state) => state.movies);
-  const { searchAction, isDiscoverMovies } = useSelector((state) => state.movies);
+  const { searchAction, isDiscoverMovies, page } = useSelector((state) => state.movies);
   const [alignment, setAlignment] = React.useState("web");
   const [language, setLanguage] = React.useState("");
   const [value, setValue] = React.useState(new Date());
@@ -52,8 +52,8 @@ export const FiltersMenu = () => {
   let year = yearDiscover.getFullYear();
 
 
-  const getDiscoverMovies = (genreDicover,languageDiscover, year ) => {
-    dispatch(getDiscoverMoviesAsync(genreDicover,languageDiscover, year))
+  const getDiscoverMovies = (genreDiscover,languageDiscover, year,page ) => {
+    dispatch(getDiscoverMoviesAsync(genreDiscover,languageDiscover, year,page));
   }
 
   const getClear = () => {
@@ -63,6 +63,10 @@ export const FiltersMenu = () => {
     setValue(new Date());
     setLanguage('');
   };
+
+  useEffect(()=> {
+    dispatch(getDiscoverMoviesAsync(genreDiscover,languageDiscover, year,page));
+  }, [dispatch,page]);
 
   return (
     <Box sx={{ width: 400, mt: 8 }}>
@@ -177,7 +181,7 @@ export const FiltersMenu = () => {
         </AccordionDetails>
       </Accordion>
       <PrimaryButton onClick={() => {
-        getDiscoverMovies(genreDiscover,languageDiscover, year);
+        getDiscoverMovies(genreDiscover,languageDiscover, year,page);
         setExpanded(false);
         }}>Search</PrimaryButton>
     </Box>

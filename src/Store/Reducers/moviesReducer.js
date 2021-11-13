@@ -2,6 +2,7 @@ import { movieAction } from "../Actions/movies";
 
 export const initialState = {
   movies: [],
+  page: 1,
   searchMovies: [],
   searchAction: false,
   getDetails: {},
@@ -62,6 +63,12 @@ export function moviesReducer(state = initialState, action) {
         searchAction: false,
         isDiscoverMovies: true,
       };
+      case movieAction.SET_PAGE:
+        console.log(action.payload)
+        return {
+          ...state,
+          page: action.payload.page
+        };
     default:
       return state;
   }

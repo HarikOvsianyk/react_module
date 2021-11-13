@@ -73,13 +73,14 @@ export const getLanguagesList = async () => {
   return data;
 };
 
-export const getDiscoverMovies = async (genre,langauge, year) => {
+export const getDiscoverMovies = async (genre,langauge, year, page) => {
   const {data} = await authAxios.get('/discover/movie', {
 		params: {
 			sort_by: 'popularity.desc',
       with_genres: genre,
       with_original_language: langauge,
 			primary_release_year: year,
+      page:page,
 		},
   });
   return data;

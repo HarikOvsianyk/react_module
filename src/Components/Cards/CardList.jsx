@@ -4,11 +4,13 @@ import Loader from "../UI/Loader/Loader";
 import Container from "@mui/material/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMoviesAsync,getGenresListAsync,getLanguagesListAsync } from "../../Thunks";
+import {setPage} from '../../Store/Actions';
+import { PaginationMovies } from "../UI/PaginationMovies";
 
 export const CardList = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.loader);
-  const { movies, searchMovies, searchAction, discoverMovies, isDiscoverMovies } = useSelector(
+  const { movies, searchMovies, searchAction, discoverMovies, isDiscoverMovies, page } = useSelector(
     (state) => state.movies
   );
 
@@ -27,13 +29,19 @@ export const CardList = () => {
     renderArray = discoverMovies;
   };
 
+  const changePage = (event, value) => {
+    dispatch(setPage(value));
+  }
+
   useEffect(() => {
-    dispatch(fetchMoviesAsync());
+    dispatch(fetchMoviesAsync(page));
     dispatch(getGenresListAsync());
     dispatch(getLanguagesListAsync());
-  }, [dispatch]);
+  }, [dispatch,page]);
 
   return (
+    <Container>
+      <PaginationMovies count={renderArray.total_pages} page={page} changePage={changePage}/>
     <Container
       maxWidth="xl"
       sx={{
@@ -45,6 +53,7 @@ export const CardList = () => {
         justifyContent:'space-between'
       }}
     >
+      
       {isLoading ? (
         <Loader />
       ) : (
@@ -54,5 +63,7 @@ export const CardList = () => {
         })
       )}
     </Container>
+    </Container>
+    
   );
 };
