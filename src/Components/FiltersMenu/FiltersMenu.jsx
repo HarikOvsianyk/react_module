@@ -17,19 +17,20 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Stack from "@mui/material/Stack";
 import Button from '@mui/material/Button';
+import {PrimaryButton} from '../UI/PrimaryButton';
 import { useSelector } from "react-redux";
 import { getMoviesByGenreAsync, getMoviesByLanguageAsync,getMoviesByYearAsync } from "../../Thunks";
 import { useDispatch } from "react-redux";
+import {changeSearchActions} from '../../Store/Actions';
 
 export const FiltersMenu = () => {
   const dispatch = useDispatch();
   const { genresList, languagesList } = useSelector((state) => state.movies);
+  const { searchAction, isMoviesByGenre, isMoviesByLanguage, isMoviesByYear } = useSelector((state) => state.movies);
   const [alignment, setAlignment] = React.useState("web");
   const [language, setLanguage] = React.useState("");
   const [value, setValue] = React.useState(new Date());
   let year = value.getFullYear();
-
-  console.log(year);
   
   const getFilterByGenre = (genre) => {
     dispatch(getMoviesByGenreAsync(genre));
@@ -57,8 +58,18 @@ export const FiltersMenu = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const getClear = () => {
+    dispatch(changeSearchActions());
+  };
+
   return (
     <Box sx={{ width: 400, mt: 8 }}>
+      {(searchAction || isMoviesByGenre || isMoviesByLanguage || isMoviesByYear)
+        ?
+        <PrimaryButton onClick={getClear}>Clear search</PrimaryButton>
+        :
+        ''
+      }
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChangePanel("panel1")}

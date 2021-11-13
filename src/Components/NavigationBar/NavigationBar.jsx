@@ -16,7 +16,6 @@ import Avatar from "@mui/material/Avatar";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchAsync, getFavouritesAsync } from "../../Thunks";
-import { changeSearchAction } from "../../Store/Actions";
 import { useHistory } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
@@ -60,17 +59,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export const NavigationBar = () => {
   const history = useHistory();
-  const { searchAction } = useSelector((state) => state.movies);
   const { currentUser, isLoggedIn } = useSelector((state) => state.user);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-  const sessionId = localStorage.getItem('session_id');
-  const onClean = () => {
-    dispatch(changeSearchAction());
-  };
+  const sessionId = localStorage.getItem("session_id");
   const onSubmit = () => {
     dispatch(fetchSearchAsync(search));
-    history.push('/main');
+    history.push("/main");
     setSearch("");
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -88,8 +83,8 @@ export const NavigationBar = () => {
   const getFavourits = () => {
     handleMenuClose();
     dispatch(getFavouritesAsync(currentUser.id, sessionId));
-    history.push('/favourites');
-  }
+    history.push("/favourites");
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -121,8 +116,8 @@ export const NavigationBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block", cursor:'pointer' } }}
-            onClick={()=>history.push('/main')}
+            sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
+            onClick={() => history.push("/main")}
           >
             The Movie DB
           </Typography>
@@ -138,16 +133,9 @@ export const NavigationBar = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </Search>
-          {searchAction ? (
-            <PrimaryButton sx={{ ml: 2 }} onClick={onClean}>
-              Clean
-            </PrimaryButton>
-          ) : (
-            <PrimaryButton sx={{ ml: 2 }} onClick={onSubmit}>
-              Search
-            </PrimaryButton>
-          )}
-
+          <PrimaryButton sx={{ ml: 2 }} onClick={onSubmit}>
+            Search
+          </PrimaryButton>
           <Switch />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

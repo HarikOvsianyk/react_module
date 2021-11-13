@@ -1,7 +1,7 @@
 export const movieAction = {
 	FETCH_MOVIES_SUCCESS: '[movie] - fetch movies success',
 	FETCH_SEARCH_SUCCESS: '[movie] - fetch search',
-	CHANGE_SEARCH_ACTION: '[movie] - change search action',
+	CHANGE_SEARCH_ACTIONS: '[movie] - change search action',
 	GET_DETAILS_SUCCESS: '[movie] - get more details',
 	GET_FEVOURITES_SUCCESS: '[movie] - get fevourites success',
 	GET_GENRES_LIST_SUCCESS: '[movie] - get genres list success',
@@ -26,8 +26,8 @@ export const fetchSearchSuccess = (movies) => ({
 	},
 });
 
-export const changeSearchAction = () => ({
-	type: movieAction.CHANGE_SEARCH_ACTION,
+export const changeSearchActions = () => ({
+	type: movieAction.CHANGE_SEARCH_ACTIONS,
 });
 
 export const getDetailsSuccess = (movie) => ({

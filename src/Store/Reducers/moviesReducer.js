@@ -30,11 +30,17 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         searchMovies: action.payload.movies,
         searchAction: true,
+        isMoviesByYear: false,
+        isMoviesByGenre: false,
+        isMoviesByLanguage: false,
       };
-    case movieAction.CHANGE_SEARCH_ACTION:
+    case movieAction.CHANGE_SEARCH_ACTIONS:
       return {
         ...state,
         searchAction: false,
+        isMoviesByYear: false,
+        isMoviesByGenre: false,
+        isMoviesByLanguage: false,
       };
     case movieAction.GET_DETAILS_SUCCESS:
       return {
@@ -62,18 +68,27 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         moviesByGenre: action.payload.movies,
         isMoviesByGenre: true,
+        searchAction: false,
+        isMoviesByLanguage: false,
+        isMoviesByYear: false,
       };
       case movieAction.GET_MOVIES_BY_LANGUAGE_SUCCESS:
         return {
           ...state,
           moviesByLanguage: action.payload.movies,
           isMoviesByLanguage: true,
+          isMoviesByGenre:false,
+          searchAction: false,
+          isMoviesByYear: false,
         };
         case movieAction.GET_MOVIES_BY_YEAR_SUCCESS:
           return {
             ...state,
             moviesByYear: action.payload.movies,
             isMoviesByYear: true,
+            isMoviesByGenre: false,
+            isMoviesByLanguage: false,
+            searchAction: false,
           };
     default:
       return state;
