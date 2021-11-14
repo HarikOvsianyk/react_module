@@ -6,6 +6,8 @@ function Loader() {
   return (
     <Box
       sx={{
+        ml:50,
+        mt:40,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
