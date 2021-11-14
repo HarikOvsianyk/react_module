@@ -66,7 +66,6 @@ export const Movie = () => {
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
               Release date: {getDetails.release_date}
             </Typography>
-            {/* <Typography sx={{ml:10,mr:10,mb:1, fontSize: 20}}>Genre: {getDetails.genres[0].name}</Typography> */}
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
               Overview: {getDetails.overview}
             </Typography>
