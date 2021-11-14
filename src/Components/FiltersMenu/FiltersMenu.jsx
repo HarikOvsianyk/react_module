@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -63,10 +63,6 @@ export const FiltersMenu = () => {
     setValue(new Date());
     setLanguage('');
   };
-
-  useEffect(()=> {
-    dispatch(getDiscoverMoviesAsync(genreDiscover,languageDiscover, year,page));
-  }, [dispatch,page]);
 
   return (
     <Box sx={{ width: 400, mt: 8 }}>

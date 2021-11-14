@@ -2,9 +2,11 @@ import { movieAction } from "../Actions/movies";
 
 export const initialState = {
   movies: [],
+  isFetchMovies: false,
   page: 1,
   searchMovies: [],
   searchAction: false,
+  search: "",
   getDetails: {},
   favourites: [],
   isFavourites: false,
@@ -20,6 +22,7 @@ export function moviesReducer(state = initialState, action) {
       return {
         ...state,
         movies: action.payload.movies,
+        isFetchMovies: true,
         isFavourites: false,
       };
     case movieAction.FETCH_SEARCH_SUCCESS:
@@ -28,12 +31,18 @@ export function moviesReducer(state = initialState, action) {
         searchMovies: action.payload.movies,
         searchAction: true,
         isDiscoverMovies: false,
+        isFetchMovies: false,
       };
     case movieAction.CHANGE_SEARCH_ACTIONS:
       return {
         ...state,
         searchAction: false,
         isDiscoverMovies: false,
+      };
+    case movieAction.SET_SEARCH_DATA:
+      return {
+        ...state,
+        search: action.payload,
       };
     case movieAction.GET_DETAILS_SUCCESS:
       return {
@@ -61,14 +70,14 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         discoverMovies: action.payload.movies,
         searchAction: false,
+        isFetchMovies: false,
         isDiscoverMovies: true,
       };
-      case movieAction.SET_PAGE:
-        console.log(action.payload)
-        return {
-          ...state,
-          page: action.payload.page
-        };
+    case movieAction.SET_PAGE:
+      return {
+        ...state,
+        page: action.payload.page,
+      };
     default:
       return state;
   }

@@ -19,10 +19,10 @@ export const fetchMoviesAsync = (page) => {
   };
 };
 
-export const fetchSearchAsync = (search) => {
+export const fetchSearchAsync = (search,page) => {
   return async (dispatch) => {
     dispatch(onLoader());
-    const movies = await fetchSearch(search);
+    const movies = await fetchSearch(search,page);
     dispatch(fetchSearchSuccess(movies));
     dispatch(offLoader());
   };
@@ -74,7 +74,6 @@ export const getDiscoverMoviesAsync = (genre,language,year,page) => {
     const movies = await getDiscoverMovies(genre,language,year, page);
     dispatch(getMoviesDiscoverSuccess(movies));
     dispatch(offLoader());
-    console.log(movies);
   }
 };
 

@@ -2,6 +2,7 @@ export const movieAction = {
 	FETCH_MOVIES_SUCCESS: '[movie] - fetch movies success',
 	FETCH_SEARCH_SUCCESS: '[movie] - fetch search',
 	CHANGE_SEARCH_ACTIONS: '[movie] - change search action',
+	SET_SEARCH_DATA: '[movie] - set search',
 	GET_DETAILS_SUCCESS: '[movie] - get more details',
 	GET_FEVOURITES_SUCCESS: '[movie] - get fevourites success',
 	GET_GENRES_LIST_SUCCESS: '[movie] - get genres list success',
@@ -24,6 +25,11 @@ export const fetchSearchSuccess = (movies) => ({
 		movies
 	},
 });
+
+export const setSearchData = (search) => ({
+	type: movieAction.SET_SEARCH_DATA,
+	payload: search,
+})
 
 export const changeSearchActions = () => ({
 	type: movieAction.CHANGE_SEARCH_ACTIONS,

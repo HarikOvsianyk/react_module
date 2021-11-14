@@ -17,10 +17,11 @@ export const fetchMovies = async (page) => {
   return data;
 };
 
-export const fetchSearch = async (search) => {
+export const fetchSearch = async (search,page) => {
   const { data } = await authAxios.get("/search/movie", {
     params: {
       query: search,
+      page:page
     },
   });
   return data;

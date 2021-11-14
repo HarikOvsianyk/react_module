@@ -31,6 +31,9 @@ export const Movie = () => {
     dispatch(setFavouriteAsync(sessionId,currentUser.id,getDetails.id));
     notify();
   };
+
+  console.log(getDetails);
+
   return (
     <Box sx={{ width: 900, m: "0 auto", position: "relative" }}>
       {isFavourites ? (

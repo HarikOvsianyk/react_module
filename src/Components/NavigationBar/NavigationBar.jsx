@@ -17,6 +17,7 @@ import { PrimaryButton } from "../UI/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchAsync, getFavouritesAsync } from "../../Thunks";
 import { useHistory } from "react-router-dom";
+import {setSearchData} from '../../Store/Actions';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -60,11 +61,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const NavigationBar = () => {
   const history = useHistory();
   const { currentUser, isLoggedIn } = useSelector((state) => state.user);
+  const {page} = useSelector(state=> state.movies);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const sessionId = localStorage.getItem("session_id");
   const onSubmit = () => {
-    dispatch(fetchSearchAsync(search));
+    dispatch(fetchSearchAsync(search,page));
+    dispatch(setSearchData(search));
     history.push("/main");
     setSearch("");
   };
