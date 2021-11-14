@@ -3,6 +3,8 @@ import { movieAction } from "../Actions/movies";
 export const initialState = {
   movies: [],
   page: 1,
+  searchQuery:{},
+  isSearchQuery: false,
   searchMovies: [],
   searchAction: false,
   getDetails: {},
@@ -33,7 +35,6 @@ export function moviesReducer(state = initialState, action) {
       return {
         ...state,
         searchAction: false,
-        isDiscoverMovies: false,
       };
     case movieAction.GET_DETAILS_SUCCESS:
       return {
@@ -57,6 +58,7 @@ export function moviesReducer(state = initialState, action) {
         languagesList: action.payload,
       };
     case movieAction.GET_MOVIES_DISCOVER_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         discoverMovies: action.payload.movies,
@@ -64,11 +66,25 @@ export function moviesReducer(state = initialState, action) {
         isDiscoverMovies: true,
       };
       case movieAction.SET_PAGE:
-        console.log(action.payload)
         return {
           ...state,
           page: action.payload.page
         };
+        case movieAction.SET_SEARCH_QUERY:
+          console.log(action.payload);
+          return {
+            ...state,
+            searchQuery: {...action.payload},
+            isSearchQuery: true, 
+          };
+          case movieAction.CHANGE_SEARCH_STATE:
+            return {
+              ...state,
+              searchQuery: {},
+              isSearchQuery: false,
+              discoverMovies:[], 
+              isDiscoverMovies: false,
+            };
     default:
       return state;
   }

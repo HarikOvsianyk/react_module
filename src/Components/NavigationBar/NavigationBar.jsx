@@ -17,6 +17,7 @@ import { PrimaryButton } from "../UI/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchAsync, getFavouritesAsync } from "../../Thunks";
 import { useHistory } from "react-router-dom";
+import {changeSearchActions,changeSearchState} from '../../Store/Actions';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -117,7 +118,8 @@ export const NavigationBar = () => {
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
-            onClick={() => history.push("/main")}
+            onClick={() => {history.push("/main");
+                            dispatch(changeSearchActions());}}
           >
             The Movie DB
           </Typography>

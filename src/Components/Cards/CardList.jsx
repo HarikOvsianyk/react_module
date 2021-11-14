@@ -3,17 +3,18 @@ import { MovieCard } from "./MovieCard";
 import Loader from "../UI/Loader/Loader";
 import Container from "@mui/material/Container";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMoviesAsync,getGenresListAsync,getLanguagesListAsync } from "../../Thunks";
+import { fetchMoviesAsync,getGenresListAsync,getLanguagesListAsync,getDiscoverMoviesAsync } from "../../Thunks";
 import {setPage} from '../../Store/Actions';
 import { PaginationMovies } from "../UI/PaginationMovies";
 
 export const CardList = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.loader);
-  const { movies, searchMovies, searchAction, discoverMovies, isDiscoverMovies, page } = useSelector(
+  const { movies, searchMovies, searchAction, discoverMovies, isDiscoverMovies, page, searchQuery } = useSelector(
     (state) => state.movies
   );
 
+  console.log(discoverMovies);
   let renderArray = movies;
 
   if (searchAction) {
@@ -29,9 +30,12 @@ export const CardList = () => {
     renderArray = discoverMovies;
   };
 
-  const changePage = (event, value) => {
+/*   const changePage = (event, value) => {
     dispatch(setPage(value));
-  }
+    if (isDiscoverMovies) {
+      dispatch(getDiscoverMoviesAsync(searchQuery,page));
+    }
+  }; */
 
   useEffect(() => {
     dispatch(fetchMoviesAsync(page));
@@ -41,7 +45,7 @@ export const CardList = () => {
 
   return (
     <Container>
-      <PaginationMovies count={renderArray.total_pages} page={page} changePage={changePage}/>
+      {<PaginationMovies count={renderArray.total_pages} page={page} /* changePage={changePage} *//>}
     <Container
       maxWidth="xl"
       sx={{

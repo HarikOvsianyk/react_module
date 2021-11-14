@@ -8,6 +8,8 @@ export const movieAction = {
 	GET_LANGUAGES_LIST_SUCCESS: '[movie] - get languages list success',
 	GET_MOVIES_DISCOVER_SUCCESS: '[movie] - get movies discover success',
 	SET_PAGE: '[movie] - set page',
+	SET_SEARCH_QUERY: '[movie] - set search query',
+	CHANGE_SEARCH_STATE: '[movie] - change search state ',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
@@ -60,4 +62,13 @@ export const getMoviesDiscoverSuccess = (movies) => ({
 export const setPage = (page) => ({
 	type: movieAction.SET_PAGE,
 	payload: {page},
+});
+
+export const setSearchQuery = (genreDiscover,languageDiscover, year) => ({
+	type: movieAction.SET_SEARCH_QUERY,
+	payload: {genreDiscover,languageDiscover, year}
+});
+
+export const changeSearchState = () => ({
+	type: movieAction.CHANGE_SEARCH_STATE
 })

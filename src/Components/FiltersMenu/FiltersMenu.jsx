@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -16,20 +16,25 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Stack from "@mui/material/Stack";
-import {PrimaryButton} from '../UI/PrimaryButton';
+import { PrimaryButton } from "../UI/PrimaryButton";
 import { useSelector } from "react-redux";
 import { getDiscoverMoviesAsync } from "../../Thunks";
 import { useDispatch } from "react-redux";
-import {changeSearchActions} from '../../Store/Actions';
+import {
+  changeSearchActions,
+  setSearchQuery,
+  changeSearchState,
+  setPage,
+} from "../../Store/Actions";
 
 export const FiltersMenu = () => {
   const dispatch = useDispatch();
   const { genresList, languagesList } = useSelector((state) => state.movies);
-  const { searchAction, isDiscoverMovies, page } = useSelector((state) => state.movies);
+  const { searchAction, isDiscoverMovies, page, searchQuery, isSearchQuery } =
+    useSelector((state) => state.movies);
   const [alignment, setAlignment] = React.useState("web");
   const [language, setLanguage] = React.useState("");
   const [value, setValue] = React.useState(new Date());
-
 
   const handleChangeSelect = (event) => {
     setLanguage(event.target.value);
@@ -45,37 +50,34 @@ export const FiltersMenu = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  let [genreDiscover, setGenreDiscover]=useState('');
-  let [languageDiscover, setLanguageDiscover] = useState('');
+  let [genreDiscover, setGenreDiscover] = useState("");
+  let [languageDiscover, setLanguageDiscover] = useState("");
   let [yearDiscover, setYearDiscover] = useState(value);
+
+  console.log(genreDiscover);
 
   let year = yearDiscover.getFullYear();
 
-
-  const getDiscoverMovies = (genreDiscover,languageDiscover, year,page ) => {
-    dispatch(getDiscoverMoviesAsync(genreDiscover,languageDiscover, year,page));
-  }
+  const getDiscoverMovies = (genreDiscover, languageDiscover, year) => {
+    dispatch(setSearchQuery(genreDiscover, languageDiscover, year));
+  };
 
   const getClear = () => {
-    dispatch(changeSearchActions());
     handleChange();
     setExpanded(false);
     setValue(new Date());
-    setLanguage('');
+    setLanguage("");
+    dispatch(changeSearchState());
+    dispatch(setPage(1));
   };
-
-  useEffect(()=> {
-    dispatch(getDiscoverMoviesAsync(genreDiscover,languageDiscover, year,page));
-  }, [dispatch,page]);
 
   return (
     <Box sx={{ width: 400, mt: 8 }}>
-      {(searchAction || isDiscoverMovies)
-        ?
+      {searchAction || isDiscoverMovies ? (
         <PrimaryButton onClick={getClear}>Clear search</PrimaryButton>
-        :
-        ''
-      }
+      ) : (
+        ""
+      )}
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChangePanel("panel1")}
@@ -180,10 +182,28 @@ export const FiltersMenu = () => {
           </Box>
         </AccordionDetails>
       </Accordion>
-      <PrimaryButton onClick={() => {
-        getDiscoverMovies(genreDiscover,languageDiscover, year,page);
-        setExpanded(false);
-        }}>Search</PrimaryButton>
+      {isSearchQuery ? (
+        <PrimaryButton
+          onClick={() => {
+            dispatch(getDiscoverMoviesAsync(searchQuery, page));
+            handleChange();
+            setExpanded(false);
+            setValue(new Date());
+            setLanguage("");
+          }}
+        >
+          Search
+        </PrimaryButton>
+      ) : (
+        <PrimaryButton
+          onClick={() => {
+            getDiscoverMovies(genreDiscover, languageDiscover, year, page);
+            setExpanded(false);
+          }}
+        >
+          OK
+        </PrimaryButton>
+      )}
     </Box>
   );
 };

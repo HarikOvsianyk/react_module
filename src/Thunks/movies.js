@@ -68,13 +68,12 @@ export const getLanguagesListAsync = () => {
 };
 
 
-export const getDiscoverMoviesAsync = (genre,language,year,page) => {
+export const getDiscoverMoviesAsync = (searchQuery,page) => {
   return async (dispatch) => {
     dispatch(onLoader());
-    const movies = await getDiscoverMovies(genre,language,year, page);
+    const movies = await getDiscoverMovies(searchQuery, page);
     dispatch(getMoviesDiscoverSuccess(movies));
     dispatch(offLoader());
-    console.log(movies);
   }
 };
 
