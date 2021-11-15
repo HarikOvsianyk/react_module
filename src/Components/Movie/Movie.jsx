@@ -70,7 +70,7 @@ export const Movie = () => {
               <b>{getDetails.title}</b>
             </Typography>
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
-              <b>Genre:</b>{" "}
+              <b>Genres:</b>{" "}
               {getDetails.genres &&
                 getDetails.genres.map((genre) => <Typography key={genre.id}>{genre.name}</Typography>)}
             </Typography>
