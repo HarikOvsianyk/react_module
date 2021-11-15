@@ -85,11 +85,12 @@ export const MovieCard = (props) => {
       </IconButton>
       <CardMedia
         component="img"
+        height='400'
         image={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt="Paella dish"
         onClick={onClickMore}
       />
-      <CardContent>
+      <CardContent sx={{height:120}}>
         <Box
           sx={{
             position: "absolute",
@@ -125,7 +126,7 @@ export const MovieCard = (props) => {
             </Typography>
           </Box>
         </Box>
-        <Typography component="h5" variant="subtitle1">
+        <Typography component="h5" sx={{fonsSize:20}}>
           {title}
         </Typography>
         <ToastContainer />
