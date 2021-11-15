@@ -11,13 +11,13 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import Switch from "../UI/Switch";
 import Avatar from "@mui/material/Avatar";
-import { PrimaryButton } from "../UI/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSearchAsync, getFavouritesAsync } from "../../Thunks";
 import { useHistory } from "react-router-dom";
-import {setSearchData, setPage} from '../../Store/Actions';
+import Switch from "../UI/Switch";
+import { PrimaryButton } from "../UI/PrimaryButton";
+import { fetchSearchAsync, getFavouritesAsync } from "../../Thunks";
+import { setSearchData, setPage } from "../../Store/Actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,35 +61,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const NavigationBar = () => {
   const history = useHistory();
   const { currentUser, isLoggedIn } = useSelector((state) => state.user);
-  const {page} = useSelector(state=> state.movies);
+  const { page } = useSelector((state) => state.movies);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const sessionId = localStorage.getItem("session_id");
-  const onSubmit = () => { 
-    dispatch(setPage(1))  
+  const onSubmit = () => {
+    dispatch(setPage(1));
     history.push("/main");
     setSearch("");
-    dispatch(fetchSearchAsync(search,page));
+    dispatch(fetchSearchAsync(search, page));
     dispatch(setSearchData(search));
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
   const getFavourits = () => {
     handleMenuClose();
     dispatch(getFavouritesAsync(currentUser.id, sessionId));
     history.push("/favourites");
   };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -134,7 +129,9 @@ export const NavigationBar = () => {
               placeholder="Search movie…"
               inputProps={{ "aria-label": "search" }}
               sx={{ width: "140ch" }}
-              onChange={(e) => {setSearch(e.target.value)}}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
             />
           </Search>
           <PrimaryButton sx={{ ml: 2 }} onClick={onSubmit}>

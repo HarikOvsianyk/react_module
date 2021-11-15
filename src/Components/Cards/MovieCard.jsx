@@ -13,15 +13,16 @@ import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 import { getDetailsAsync, setFavouriteAsync } from "../../Thunks";
 
 export const MovieCard = (props) => {
   const { title, poster_path, release_date, id, vote_average } = props;
-  const {currentUser} = useSelector(state=> state.user);
-  const {isFavourites} = useSelector(state=> state.movies);
+  const { currentUser } = useSelector((state) => state.user);
+  const { isFavourites } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionId = localStorage.getItem('session_id');
+  const sessionId = localStorage.getItem("session_id");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleCardMenuOpen = (event) => {
@@ -30,25 +31,24 @@ export const MovieCard = (props) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
   const onClickMore = () => {
     history.push(`/movie/${id}`);
     dispatch(getDetailsAsync(id));
   };
-  const notify = () => toast.success('Added tp favourite list', {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,    
+  const notify = () =>
+    toast.success("Added tp favourite list", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
   const onClickFavourite = () => {
-    dispatch(setFavouriteAsync(sessionId,currentUser.id,id));
+    dispatch(setFavouriteAsync(sessionId, currentUser.id, id));
     notify();
   };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -66,12 +66,11 @@ export const MovieCard = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {isFavourites
-      ? ''
-      :
-      <MenuItem onClick={onClickFavourite}>
-        Add to favourite
-      </MenuItem>}
+      {isFavourites ? (
+        ""
+      ) : (
+        <MenuItem onClick={onClickFavourite}>Add to favourite</MenuItem>
+      )}
       <MenuItem onClick={onClickMore}>More...</MenuItem>
     </Menu>
   );
@@ -100,7 +99,11 @@ export const MovieCard = (props) => {
             bottom: 105,
           }}
         >
-          <CircularProgress variant="determinate" color="success" value={vote_average*10} />
+          <CircularProgress
+            variant="determinate"
+            color="success"
+            value={vote_average * 10}
+          />
           <Box
             sx={{
               top: 0,
@@ -118,17 +121,25 @@ export const MovieCard = (props) => {
               component="div"
               sx={{ color: "white" }}
             >
-              {`${(vote_average)*10}%`}
+              {`${vote_average * 10}%`}
             </Typography>
           </Box>
         </Box>
         <Typography component="h5" variant="subtitle1">
           {title}
         </Typography>
-        <ToastContainer/>
+        <ToastContainer />
         <Typography>{release_date}</Typography>
       </CardContent>
       {renderMenu}
     </Card>
   );
+};
+
+MovieCard.propTypes = {
+  title: PropTypes.string,
+  poster_path: PropTypes.string,
+  release_date: PropTypes.string,
+  id: PropTypes.number,
+  vote_average: PropTypes.number,
 };

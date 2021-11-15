@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MovieCard } from "./MovieCard";
-import Loader from "../UI/Loader/Loader";
 import Container from "@mui/material/Container";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchMoviesAsync,
-  getGenresListAsync,
-  getLanguagesListAsync,
-} from "../../Thunks";
-import { setPage } from "../../Store/Actions";
-import { PaginationMovies } from "../UI/PaginationMovies";
 import Box from "@mui/material/Box";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -27,9 +17,23 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Stack from "@mui/material/Stack";
+import { useSelector, useDispatch } from "react-redux";
 import { PrimaryButton } from "../UI/PrimaryButton";
-import { getDiscoverMoviesAsync, fetchSearchAsync } from "../../Thunks";
-import { changeSearchActions,clearDiscover } from "../../Store/Actions";
+import { MovieCard } from "./MovieCard";
+import Loader from "../UI/Loader/Loader";
+import { PaginationMovies } from "../UI/PaginationMovies";
+import {
+  getDiscoverMoviesAsync,
+  fetchSearchAsync,
+  fetchMoviesAsync,
+  getGenresListAsync,
+  getLanguagesListAsync,
+} from "../../Thunks";
+import {
+  changeSearchActions,
+  clearDiscover,
+  setPage,
+} from "../../Store/Actions";
 
 export const CardList = () => {
   const dispatch = useDispatch();
@@ -43,65 +47,23 @@ export const CardList = () => {
     isDiscoverMovies,
     page,
   } = useSelector((state) => state.movies);
-   let renderArray = movies;
-
-  if (searchAction) {
-    renderArray = searchMovies;
-  }
-
-  if (!searchAction && !isDiscoverMovies) {
-    renderArray = movies;
-  }
-
-  if (isDiscoverMovies) {
-    renderArray = discoverMovies;
-  }
-
-  const changePage = (event, value) => {
-    dispatch(clearDiscover());
-    dispatch(setPage(value));
-    if (isDiscoverMovies) {
-      dispatch(
-        getDiscoverMoviesAsync(genreDiscover, languageDiscover, year, value)
-      );
-    }
-
-    if (searchAction) {
-      dispatch(fetchSearchAsync(search, value));
-    }
-  };
-
-  useEffect(() => {
-    dispatch(fetchMoviesAsync(page));
-    dispatch(getGenresListAsync());
-    dispatch(getLanguagesListAsync());
-  }, [dispatch, page]);
-
   const { genresList, languagesList } = useSelector((state) => state.movies);
   const [alignment, setAlignment] = React.useState("web");
   const [language, setLanguage] = React.useState("");
   const [value, setValue] = React.useState(new Date());
-
   const handleChangeSelect = (event) => {
     setLanguage(event.target.value);
   };
-
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
-
   const [expanded, setExpanded] = React.useState(false);
-
   const handleChangePanel = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-
-  let [genreDiscover, setGenreDiscover] = useState("");
-  let [languageDiscover, setLanguageDiscover] = useState("");
-  let [yearDiscover, setYearDiscover] = useState(value);
-
-  let year = yearDiscover.getFullYear();
-
+  const [genreDiscover, setGenreDiscover] = useState("");
+  const [languageDiscover, setLanguageDiscover] = useState("");
+  const [yearDiscover, setYearDiscover] = useState(value);
   const getDiscoverMovies = (genreDiscover, languageDiscover, year, page) => {
     dispatch(
       getDiscoverMoviesAsync(genreDiscover, languageDiscover, year, page)
@@ -116,11 +78,54 @@ export const CardList = () => {
     setLanguage("");
     dispatch(setPage(1));
   };
+  const changePage = (event, value) => {
+    dispatch(clearDiscover());
+    dispatch(setPage(value));
+    if (isDiscoverMovies) {
+      dispatch(
+        getDiscoverMoviesAsync(genreDiscover, languageDiscover, year, value)
+      );
+    }
+
+    if (searchAction) {
+      dispatch(fetchSearchAsync(search, value));
+    }
+  };
+
+  let renderArray = movies;
+  if (searchAction) {
+    renderArray = searchMovies;
+  }
+  if (!searchAction && !isDiscoverMovies) {
+    renderArray = movies;
+  }
+  if (isDiscoverMovies) {
+    renderArray = discoverMovies;
+  }
+
+  useEffect(() => {
+    dispatch(fetchMoviesAsync(page));
+    dispatch(getGenresListAsync());
+    dispatch(getLanguagesListAsync());
+  }, [dispatch, page]);
+
+  let year = yearDiscover.getFullYear();
 
   return (
-    <Container maxWidth="xl" sx={{ display: "flex",flexDirection:'column', justifyContent: "center" }}>
-      <Container maxWidth="xl" sx={{width:'auto'}}>
-      <PaginationMovies count={renderArray.total_pages} page={page} changePage={changePage}/>
+    <Container
+      maxWidth="xl"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Container maxWidth="xl" sx={{ width: "auto" }}>
+        <PaginationMovies
+          count={renderArray.total_pages}
+          page={page}
+          changePage={changePage}
+        />
       </Container>
       <Container maxWidth="xl" sx={{ display: "flex" }}>
         <Box sx={{ width: 400, mt: 8 }}>
@@ -261,7 +266,7 @@ export const CardList = () => {
           }}
         >
           {isLoading ? (
-            <Loader/>
+            <Loader />
           ) : (
             renderArray.results &&
             renderArray.results.map((movie) => {

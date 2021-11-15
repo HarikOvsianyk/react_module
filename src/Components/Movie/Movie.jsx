@@ -4,32 +4,33 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import CardMedia from "@mui/material/CardMedia";
 import CircularProgress from "@mui/material/CircularProgress";
+import StarsIcon from "@mui/icons-material/Stars";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { useHistory } from "react-router-dom";
-import StarsIcon from "@mui/icons-material/Stars";
 import { setFavouriteAsync } from "../../Thunks";
-import {clearDetails} from '../../Store/Actions';
+import { clearDetails } from "../../Store/Actions";
 
 export const Movie = () => {
   const { getDetails, isFavourites } = useSelector((state) => state.movies);
-  const {currentUser} = useSelector(state=> state.user);
-  const sessionId = localStorage.getItem('session_id');
+  const { currentUser } = useSelector((state) => state.user);
+  const sessionId = localStorage.getItem("session_id");
   const history = useHistory();
   const dispatch = useDispatch();
-  const notify = () => toast.success('Added tp favourite list', {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,    
+  const notify = () =>
+    toast.success("Added tp favourite list", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
   const onClickFavourite = () => {
-    dispatch(setFavouriteAsync(sessionId,currentUser.id,getDetails.id));
+    dispatch(setFavouriteAsync(sessionId, currentUser.id, getDetails.id));
     notify();
   };
 
@@ -37,14 +38,20 @@ export const Movie = () => {
     <Box sx={{ width: 900, m: "0 auto", position: "relative" }}>
       {isFavourites ? (
         <PrimaryButton
-          onClick={() => {history.push(`/favourites`); dispatch(clearDetails())}}
+          onClick={() => {
+            history.push(`/favourites`);
+            dispatch(clearDetails());
+          }}
           sx={{ width: 200, left: -300 }}
         >
           Back
         </PrimaryButton>
       ) : (
         <PrimaryButton
-          onClick={() => {history.push(`/main`); dispatch(clearDetails())}}
+          onClick={() => {
+            history.push(`/main`);
+            dispatch(clearDetails());
+          }}
           sx={{ width: 200, left: -300 }}
         >
           Back
@@ -63,7 +70,9 @@ export const Movie = () => {
               <b>{getDetails.title}</b>
             </Typography>
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
-              <b>Genre:</b> {getDetails.genres && getDetails.genres.map(genre=> {return <Typography key={genre.id}>{genre.name}</Typography>})}
+              <b>Genre:</b>{" "}
+              {getDetails.genres &&
+                getDetails.genres.map((genre) => <Typography key={genre.id}>{genre.name}</Typography>)}
             </Typography>
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
               <b>Release date:</b> {getDetails.release_date}
@@ -81,7 +90,14 @@ export const Movie = () => {
               bgcolor: "black",
             }}
           >
-            {isFavourites ? '': <StarsIcon sx={{ fontSize: 40, color: "white" , cursor: 'pointer'}} onClick={onClickFavourite}/>}
+            {isFavourites ? (
+              ""
+            ) : (
+              <StarsIcon
+                sx={{ fontSize: 40, color: "white", cursor: "pointer" }}
+                onClick={onClickFavourite}
+              />
+            )}
           </Box>
           <Box
             sx={{
@@ -116,7 +132,7 @@ export const Movie = () => {
               >
                 {`${getDetails.vote_average * 10}%`}
               </Typography>
-              <ToastContainer/>
+              <ToastContainer />
             </Box>
           </Box>
         </Box>

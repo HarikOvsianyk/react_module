@@ -6,13 +6,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useHistory } from "react-router-dom";
 import { Form } from "../UI/Form";
 import { Input } from "../UI/Input";
 import { DateInput } from "../UI/DateInput";
 import { SexSelect } from "../UI/SexSelect";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { schema } from "../../Utils/validationSchema";
-import { useHistory } from "react-router-dom";
 
 export const SignUp = () => {
   const history = useHistory();
@@ -25,14 +25,15 @@ export const SignUp = () => {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-  const notify = () => toast.success('It was mockup registration', {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,    
+  const notify = () =>
+    toast.success("It was mockup registration", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
   const onSubmit = () => {
     notify();
@@ -118,7 +119,7 @@ export const SignUp = () => {
             helperText={errors?.username?.message}
           />
           <PrimaryButton>Registration</PrimaryButton>
-          <ToastContainer/>
+          <ToastContainer />
         </Form>
       </Container>
     </Box>

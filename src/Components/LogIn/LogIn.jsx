@@ -4,15 +4,14 @@ import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Form } from "../UI/Form";
 import { Input } from "../UI/Input";
 import { PrimaryButton } from "../UI/PrimaryButton";
-import { useHistory } from "react-router-dom";
 import { useFetching } from "../../Hooks/useFetching";
 import * as api from "../../Apis";
-import { useLocation } from "react-router-dom";
 import { genereteSessionAndGetUser } from "../../Thunks/auth";
-import { useDispatch, useSelector } from "react-redux";
 
 export const schema = yup.object().shape({
   email: yup
@@ -27,7 +26,6 @@ export const LogIn = () => {
   const search = useLocation().search;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
   const {
     register,
     handleSubmit,
@@ -36,13 +34,15 @@ export const LogIn = () => {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-
   const [fetchToken] = useFetching(async () => {
     const token = await api.generateToken();
 
     const redirectUrl = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/`;
     window.open(redirectUrl, "_blank", "noopener noreferrer");
   });
+  const onSubmit = async (data) => {
+    fetchToken();
+  };
 
   useEffect(() => {
     const requestToken = new URLSearchParams(search).get("request_token");
@@ -57,9 +57,6 @@ export const LogIn = () => {
     }
   }, [user, history, dispatch]);
 
-  const onSubmit = async (data) => {
-    fetchToken();
-  };
   return (
     <Container sx={{ width: "400px" }}>
       <Typography component="h2" variant="h5">

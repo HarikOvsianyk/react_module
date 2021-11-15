@@ -17,11 +17,11 @@ export const fetchMovies = async (page) => {
   return data;
 };
 
-export const fetchSearch = async (search,page) => {
+export const fetchSearch = async (search, page) => {
   const { data } = await authAxios.get("/search/movie", {
     params: {
       query: search,
-      page:page
+      page: page,
     },
   });
   return data;
@@ -35,19 +35,19 @@ export const getDetails = async (id) => {
 export const setFavourite = async (sessionId, accountId, id) => {
   const { data } = await authAxios.post(
     `/account/${accountId}/favorite`,
-		{
-			media_type: 'movie',
-			media_id: id,
-			favorite: true,
-		},
-		{
-			params: {
-				session_id: sessionId,
-			},
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-		},
+    {
+      media_type: "movie",
+      media_id: id,
+      favorite: true,
+    },
+    {
+      params: {
+        session_id: sessionId,
+      },
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    }
   );
   return data;
 };
@@ -65,24 +65,24 @@ export const getFavourite = async (accountId, sessionId) => {
 };
 
 export const getGenresList = async () => {
-  const {data} = await authAxios.get('/genre/movie/list');
+  const { data } = await authAxios.get("/genre/movie/list");
   return data;
 };
 
 export const getLanguagesList = async () => {
-  const {data} = await authAxios.get('/configuration/languages');
+  const { data } = await authAxios.get("/configuration/languages");
   return data;
 };
 
-export const getDiscoverMovies = async (genre,langauge, year, page) => {
-  let {data} = await authAxios.get('/discover/movie', {
-		params: {
-			sort_by: 'popularity.desc',
+export const getDiscoverMovies = async (genre, langauge, year, page) => {
+  let { data } = await authAxios.get("/discover/movie", {
+    params: {
+      sort_by: "popularity.desc",
       with_genres: genre,
       with_original_language: langauge,
-			primary_release_year: year,
-      page:page,
-		},
+      primary_release_year: year,
+      page: page,
+    },
   });
   return data;
 };
