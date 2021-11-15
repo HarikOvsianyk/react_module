@@ -37,7 +37,7 @@ export const LogIn = () => {
   const [fetchToken] = useFetching(async () => {
     const token = await api.generateToken();
 
-    const redirectUrl = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/`;
+    const redirectUrl = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${process.env.REACT_APP_REDIRECT_LINK}`;
     window.open(redirectUrl, "_blank", "noopener noreferrer");
   });
   const onSubmit = async (data) => {
