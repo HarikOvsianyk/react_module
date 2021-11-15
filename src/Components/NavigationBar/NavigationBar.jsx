@@ -17,7 +17,7 @@ import { PrimaryButton } from "../UI/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchAsync, getFavouritesAsync } from "../../Thunks";
 import { useHistory } from "react-router-dom";
-import {setSearchData} from '../../Store/Actions';
+import {setSearchData, setPage} from '../../Store/Actions';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -65,11 +65,12 @@ export const NavigationBar = () => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const sessionId = localStorage.getItem("session_id");
-  const onSubmit = () => {
-    dispatch(fetchSearchAsync(search,page));
-    dispatch(setSearchData(search));
+  const onSubmit = () => { 
+    dispatch(setPage(1))  
     history.push("/main");
     setSearch("");
+    dispatch(fetchSearchAsync(search,page));
+    dispatch(setSearchData(search));
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -133,7 +134,7 @@ export const NavigationBar = () => {
               placeholder="Search movie…"
               inputProps={{ "aria-label": "search" }}
               sx={{ width: "140ch" }}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {setSearch(e.target.value)}}
             />
           </Search>
           <PrimaryButton sx={{ ml: 2 }} onClick={onSubmit}>

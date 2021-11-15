@@ -11,6 +11,7 @@ import { PrimaryButton } from "../UI/PrimaryButton";
 import { useHistory } from "react-router-dom";
 import StarsIcon from "@mui/icons-material/Stars";
 import { setFavouriteAsync } from "../../Thunks";
+import {clearDetails} from '../../Store/Actions';
 
 export const Movie = () => {
   const { getDetails, isFavourites } = useSelector((state) => state.movies);
@@ -36,14 +37,14 @@ export const Movie = () => {
     <Box sx={{ width: 900, m: "0 auto", position: "relative" }}>
       {isFavourites ? (
         <PrimaryButton
-          onClick={() => history.push(`/favourites`)}
+          onClick={() => {history.push(`/favourites`); dispatch(clearDetails())}}
           sx={{ width: 200, left: -300 }}
         >
           Back
         </PrimaryButton>
       ) : (
         <PrimaryButton
-          onClick={() => history.push(`/main`)}
+          onClick={() => {history.push(`/main`); dispatch(clearDetails())}}
           sx={{ width: 200, left: -300 }}
         >
           Back
@@ -58,14 +59,17 @@ export const Movie = () => {
             sx={{ width: 300 }}
           />
           <Box>
-            <Typography sx={{ mt: 5, ml: 10, mr: 10, mb: 3, fontSize: 30 }}>
-              {getDetails.title}
+            <Typography sx={{ mt: 5, ml: 10, mr: 10, fontSize: 30 }}>
+              <b>{getDetails.title}</b>
             </Typography>
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
-              Release date: {getDetails.release_date}
+              <b>Genre:</b> {getDetails.genres && getDetails.genres.map(genre=> {return <Typography key={genre.id}>{genre.name}</Typography>})}
             </Typography>
             <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
-              Overview: {getDetails.overview}
+              <b>Release date:</b> {getDetails.release_date}
+            </Typography>
+            <Typography sx={{ ml: 10, mr: 10, mb: 1, fontSize: 20 }}>
+              <b>Overview:</b> {getDetails.overview}
             </Typography>
           </Box>
           <Box

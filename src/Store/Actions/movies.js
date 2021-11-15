@@ -9,6 +9,8 @@ export const movieAction = {
 	GET_LANGUAGES_LIST_SUCCESS: '[movie] - get languages list success',
 	GET_MOVIES_DISCOVER_SUCCESS: '[movie] - get movies discover success',
 	SET_PAGE: '[movie] - set page',
+	CLEAR_DETAILS: '[movie] - clear details',
+	CLEAR_DISCOVER: '[movie] - clear discover',
 }
 
 export const fetchMoviesSuccess = (movies) => ({
@@ -66,4 +68,12 @@ export const getMoviesDiscoverSuccess = (movies) => ({
 export const setPage = (page) => ({
 	type: movieAction.SET_PAGE,
 	payload: {page},
+});
+
+export const clearDetails = () => ({
+	type: movieAction.CLEAR_DETAILS,
+});
+
+export const clearDiscover = () => ({
+	type: movieAction.CLEAR_DISCOVER,
 })

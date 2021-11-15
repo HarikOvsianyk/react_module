@@ -29,8 +29,7 @@ import DatePicker from "@mui/lab/DatePicker";
 import Stack from "@mui/material/Stack";
 import { PrimaryButton } from "../UI/PrimaryButton";
 import { getDiscoverMoviesAsync, fetchSearchAsync } from "../../Thunks";
-import { changeSearchActions } from "../../Store/Actions";
-import { onLoader, offLoader } from "../../Store/Actions";
+import { changeSearchActions,clearDiscover } from "../../Store/Actions";
 
 export const CardList = () => {
   const dispatch = useDispatch();
@@ -59,19 +58,16 @@ export const CardList = () => {
   }
 
   const changePage = (event, value) => {
+    dispatch(clearDiscover());
     dispatch(setPage(value));
     if (isDiscoverMovies) {
-      dispatch(onLoader());
       dispatch(
         getDiscoverMoviesAsync(genreDiscover, languageDiscover, year, value)
       );
-      dispatch(offLoader());
     }
 
     if (searchAction) {
-      dispatch(onLoader());
       dispatch(fetchSearchAsync(search, value));
-      dispatch(offLoader());
     }
   };
 
@@ -120,42 +116,6 @@ export const CardList = () => {
     setLanguage("");
     dispatch(setPage(1));
   };
-
-/*   if (renderArray && !renderArray.results.length) {
-    return (
-      <Container maxWidth="xl" sx={{ display: "flex",flexDirection:'column', justifyContent: "center" }}>
-        <Container maxWidth="xl" sx={{width:'auto'}}>
-        <PaginationMovies count={renderArray.total_pages} page={page} changePage={changePage}/>
-        </Container>
-        <Container maxWidth="xl" sx={{ display: "flex" }}>
-          <Box sx={{ width: 400, mt: 8 }}>
-            {searchAction || isDiscoverMovies ? (
-              <PrimaryButton onClick={getClear}>Clear search</PrimaryButton>
-            ) : (
-              ""
-            )}
-          </Box>
-          <Container
-            maxWidth="xl"
-            sx={{
-              mt: 5,
-              mb: 5,
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-            }}
-          >
-            {isLoading ? (
-              <Loader/>
-            ) : (
-              <Typography sx={{ml:30, mt:20, fontSize:30}}>Try to search another movie</Typography>
-            )}
-          </Container>
-        </Container>
-      </Container>
-    );
-  } */
 
   return (
     <Container maxWidth="xl" sx={{ display: "flex",flexDirection:'column', justifyContent: "center" }}>
@@ -283,6 +243,7 @@ export const CardList = () => {
             onClick={() => {
               getDiscoverMovies(genreDiscover, languageDiscover, year, page);
               setExpanded(false);
+              dispatch(setPage(1));
             }}
           >
             Search

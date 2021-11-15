@@ -78,6 +78,16 @@ export function moviesReducer(state = initialState, action) {
         ...state,
         page: action.payload.page,
       };
+      case movieAction.CLEAR_DETAILS:
+        return {
+          ...state,
+          getDetails: {},
+        };
+        case movieAction.CLEAR_DISCOVER:
+          return {
+            ...state,
+            discoverMovies: [],
+          };
     default:
       return state;
   }
