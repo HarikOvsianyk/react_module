@@ -8,8 +8,6 @@ export const authAxios = axios.create({
   },
 });
 
-console.log(process.env.REACT_APP_API_KEY);
-
 export const fetchMovies = async (page) => {
   const { data } = await authAxios.get("/movie/popular", {
     params: {
