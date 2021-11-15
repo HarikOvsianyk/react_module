@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { PrivateRoutes } from "./PrivateRoutes";
-import { MainPage } from "../Pages/MainPage";
-import { LogInPage } from "../Pages/LogInPage";
-import { SignUpPage } from "../Pages/SignUpPage";
-import { ErrorPage } from "../Pages/ErrorPage";
-import { ProfilePage } from "../Pages/ProfilePage";
-import { MoviePage } from "../Pages/MoviePage";
-import {FavouritesPage} from '../Pages/FavouritesPage';
+import { MainPage } from "../../Pages/MainPage";
+import { LogInPage } from "../../Pages/LogInPage";
+import { SignUpPage } from "../../Pages/SignUpPage";
+import { ErrorPage } from "../../Pages/ErrorPage";
+import { ProfilePage } from "../../Pages/ProfilePage";
+import { MoviePage } from "../../Pages/MoviePage";
+import {FavouritesPage} from '../../Pages/FavouritesPage';
 
 export const Routes = () => {
   return (
